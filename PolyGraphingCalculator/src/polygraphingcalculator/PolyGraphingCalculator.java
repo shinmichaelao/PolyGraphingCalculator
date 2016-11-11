@@ -5,17 +5,28 @@
  */
 package polygraphingcalculator;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 /**
  *
  * @author Michael
  */
 public class PolyGraphingCalculator {
 
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String[] args) {
-        // TODO code application logic here
+        Random rn = new Random();
+        List<Term> array = new ArrayList();
+        for (int i = 0; i < 5; i++) {
+            array.add(new Term(rn.nextInt(10),rn.nextInt(3)));
+        }
+        
+        Polynomial testPoly = new Polynomial(array);
+        testPoly.printPolynomial();
+        testPoly.sortByDegree();
+        testPoly.printPolynomial();
     }
     
 }
