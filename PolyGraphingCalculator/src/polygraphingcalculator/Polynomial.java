@@ -15,7 +15,7 @@ public class Polynomial {
     public void printPolynomial(){
         System.out.println("");
         for(Term t: this.terms){
-            System.out.print(t.coeff+"x^"+t.degree + " ");
+            System.out.print(t.toString()+" ");
         }
     }
     
