@@ -12,6 +12,12 @@ public class Polynomial {
         this.terms = t;
     }
     
+    public Polynomial(String s){
+        double expo
+        for(int i = 0; i < s.length(); i ++){
+            
+        }
+    }
     public void printPolynomial(){
         System.out.println("");
         for(Term t: this.terms){
