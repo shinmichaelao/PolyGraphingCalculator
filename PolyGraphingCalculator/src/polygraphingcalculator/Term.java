@@ -10,10 +10,10 @@ package polygraphingcalculator;
  * @author Michael
  */
 public class Term {
-    double coeff;
+    int coeff;
     int degree;
     
-    public Term(double c, int d){
+    public Term(int c, int d){
         this.coeff = c;
         this.degree = d;
     }
