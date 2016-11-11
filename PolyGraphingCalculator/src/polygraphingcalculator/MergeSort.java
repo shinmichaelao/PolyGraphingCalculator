@@ -14,31 +14,36 @@ import java.util.List;
  */
 public class MergeSort {
     
-    public static List<Integer> mergeSort(List<Integer> a){
+    public static List<Term> mergeSort(List<Term> a){
         int length = a.size();
         if(length <= 1){
             return a;
         }
         
-        List<Integer> kappa = new ArrayList();
-        for(Integer i: a.subList(0, length/2)){
+        List<Term> kappa = new ArrayList();
+        for(Term i: a.subList(0, length/2)){
                 kappa.add(i);
         }
-        List<Integer> kappa2 = new ArrayList();
-        for(Integer i: a.subList(length/2, length)){
+        List<Term> kappa2 = new ArrayList();
+        for(Term i: a.subList(length/2, length)){
                 kappa2.add(i);
         }
-        List<Integer> half1 = mergeSort(kappa);
-        List<Integer> half2 = mergeSort(kappa2);
+        List<Term> half1 = mergeSort(kappa);
+        List<Term> half2 = mergeSort(kappa2);
         
         return merge(half1,half2);
     }
     
-    public static List<Integer> merge(List<Integer> a1,List<Integer> a2){
-        List<Integer> result = new ArrayList();
+    public static List<Term> merge(List<Term> a1,List<Term> a2){
+        List<Term> result = new ArrayList();
         
         while(a1.size() > 0 && a2.size() > 0){
-            if(a1.get(0) > a2.get(0)){
+            if(a1.get(0).degree == a2.get(0).degree){
+                result.add(new Term(a1.get(0).coeff + a2.get(0).coeff, a1.get(0).degree));
+                a1.remove(0);
+                a2.remove(0);
+            }
+            else if(a1.get(0).degree > a2.get(0).degree){
                 result.add(a1.get(0));
                 a1.remove(0);
             }
@@ -49,12 +54,12 @@ public class MergeSort {
         }
         
         if(a1.isEmpty()){
-            for(int i: a2){
+            for(Term i: a2){
                 result.add(i);
             }
         }
         else{
-            for(int i: a1){
+            for(Term i: a1){
                 result.add(i);
             }
         }
