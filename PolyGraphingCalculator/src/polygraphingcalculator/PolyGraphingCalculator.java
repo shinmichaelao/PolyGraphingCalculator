@@ -12,7 +12,7 @@ public class PolyGraphingCalculator {
     public static void main(String[] args) {
         Random rn = new Random();
         List<Term> array = new ArrayList();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             array.add(new Term(rn.nextInt(10),rn.nextInt(3)));
         }
         
