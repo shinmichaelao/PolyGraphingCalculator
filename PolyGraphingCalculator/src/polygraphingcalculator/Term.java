@@ -4,7 +4,6 @@ package polygraphingcalculator;
 public class Term {
     double coeff;
     final int degree;
-
     
     public Term(double c, int d) {
         this.coeff = c;
@@ -29,6 +28,20 @@ public class Term {
     }
     
     public String toString(){
-        return String.format("%.03fx^%d", this.coeff, this.degree);
+        String c;
+        if (this.coeff == (int) this.coeff){
+            if (this.coeff != 0)
+                c = Integer.toString((int) this.coeff);
+            else                
+                return "";
+        }
+        else
+            c = String.format(".03f", this.coeff);
+        if (this.degree < 1)
+            return c;
+        else if (this.degree < 2)
+            return String.format("%sx", c);
+        else
+            return String.format("%sx^%d", c, this.degree);
     }
 }
