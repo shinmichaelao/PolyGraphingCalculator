@@ -16,20 +16,24 @@ public class Polynomial {
         //the variable i will be the current pointer
         int i = 0;
         //while(i < s.length()){
-            String coeff = "0";
+            String coeff = "";
             String degree = "0";
-            String cur_char = "imapotato";
+            String cur_char = "";
             
             //get the coefficient
             while(i < s.length()){
                 cur_char = s.substring(i,i+1);
-                if(cur_char.equals("x") || cur_char.equals("+") || cur_char.equals("-") || cur_char.equals(" ")){
+                if(cur_char.equals("x") || cur_char.equals("+") || cur_char.equals("-")){
                     break;
                 }
                 coeff += cur_char;
                 i++;
-                System.out.println("pos: "+i);
             }
+            
+            if(coeff.equals("")){
+                coeff = "1";
+            }
+            
             System.out.print(Double.parseDouble(coeff));
             
             //check if there is an "x" portion, otherwise coefficient is 0 like before
@@ -38,7 +42,27 @@ public class Polynomial {
                 if(i == s.length()-1){
                     degree = "1";
                 }
-                //check the next few characters until we get to a " ", "+","-"
+                else{
+                //check the next few characters until we get to a " " or  "+" or "-"
+                    i++;
+                    while(i<s.length()){
+                        cur_char = s.substring(i,i+1);
+                        if(cur_char.equals(" ") || cur_char.equals("+") || cur_char.equals("-")){
+                            break;
+                        }
+                        
+                        if(cur_char.equals("^")){
+                            i++;
+                            continue;
+                        }
+                        degree += cur_char;
+                        i++;
+                    }
+                    
+                    if(degree.equals("0")){
+                        degree = "1";
+                    }
+                }
             }
             
             System.out.println("x^" + Integer.parseInt(degree));
