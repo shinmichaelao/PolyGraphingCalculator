@@ -10,16 +10,17 @@ public class PolyGraphingCalculator {
 
     
     public static void main(String[] args) {
-        Random rn = new Random();
-        List<Term> array = new ArrayList();
-        for (int i = 0; i < 10; i++) {
-            array.add(new Term(rn.nextInt(10),rn.nextInt(3)));
-        }
-        
-        Polynomial testPoly = new Polynomial(array);
-        testPoly.printPolynomial();
-        testPoly.sortByDegree();
-        testPoly.printPolynomial();
+//        Random rn = new Random(); //testing the sorting
+//        List<Term> array = new ArrayList();
+//        for (int i = 0; i < 10; i++) {
+//            array.add(new Term(rn.nextInt(10),rn.nextInt(3)));
+//        }
+//        
+//        Polynomial testPoly = new Polynomial(array);
+//        testPoly.printPolynomial();
+//        testPoly.sortByDegree();
+//        testPoly.printPolynomial();
+        Polynomial kappa = new Polynomial("50.2x");
     }
     
 }
