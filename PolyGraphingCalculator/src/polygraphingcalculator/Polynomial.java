@@ -10,12 +10,15 @@ public class Polynomial {
     
     public Polynomial(List<Term> t){
         this.terms = t;
+        this.sortByDegree();
     }
     
     public Polynomial(String s){
+        s = s.replaceAll("\\s+",""); //cleanse the MISOGYNISTIC WHITE SPACES xd
+        
         //the variable i will be the current pointer
         int i = 0;
-        //while(i < s.length()){
+        while(i < s.length()){
             String coeff = "";
             String degree = "0";
             String cur_char = "";
@@ -23,9 +26,15 @@ public class Polynomial {
             //get the coefficient
             while(i < s.length()){
                 cur_char = s.substring(i,i+1);
-                if(cur_char.equals("x") || cur_char.equals("+") || cur_char.equals("-")){
+                if(cur_char.equals("x")){
                     break;
                 }
+                else if(cur_char.equals("+") || cur_char.equals("-")){
+                    if(!coeff.equals("")){
+                        break;
+                    }
+                }
+                
                 coeff += cur_char;
                 i++;
             }
@@ -34,7 +43,6 @@ public class Polynomial {
                 coeff = "1";
             }
             
-            System.out.print(Double.parseDouble(coeff));
             
             //check if there is an "x" portion, otherwise coefficient is 0 like before
             if(cur_char.equals("x")){
@@ -47,7 +55,7 @@ public class Polynomial {
                     i++;
                     while(i<s.length()){
                         cur_char = s.substring(i,i+1);
-                        if(cur_char.equals(" ") || cur_char.equals("+") || cur_char.equals("-")){
+                        if(cur_char.equals("+") || cur_char.equals("-")){
                             break;
                         }
                         
@@ -65,9 +73,12 @@ public class Polynomial {
                 }
             }
             
-            System.out.println("x^" + Integer.parseInt(degree));
-       // }
+            this.terms.add(new Term(Double.parseDouble(coeff),Integer.parseInt(degree))); //put together the term
+        }
+        
+        this.sortByDegree(); //sort this mf
     }
+    
     public void printPolynomial(){
         System.out.println("");
         for(Term t: this.terms){
