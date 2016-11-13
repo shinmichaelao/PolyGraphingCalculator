@@ -10,6 +10,7 @@ public class PolyGraphingCalculator {
 
     
     public static void main(String[] args) {
+        GUI.main(args);
         Random rn = new Random(); //testing the sorting
         List<Term> array = new ArrayList();
         for (int i = 0; i < 10; i++) {
