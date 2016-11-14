@@ -79,6 +79,37 @@ public class Polynomial {
         this.sortByDegree(); //sort this mf
     }
     
+        public Polynomial polyAdd(Polynomial poly){
+        List<Term> myTerms = new ArrayList();
+        myTerms.addAll(this.terms);
+        myTerms.addAll(poly.terms);
+        return new Polynomial(myTerms);
+    }
+    public Polynomial polySubtract(Polynomial poly){
+        List<Term> myTerms = new ArrayList();
+        myTerms.addAll(this.terms);
+        for(Term t: poly.terms){
+            myTerms.add(new Term(-t.coeff,t.degree));
+        }
+        return new Polynomial(myTerms);
+    }
+    
+    public Polynomial polyMultiply(Polynomial poly){
+        Term termA = null;
+        Term termB = null;
+        List<Term> myTerms = new ArrayList();
+        for (int i = 0; i < this.terms.size(); i++) {
+            termA = this.terms.get(i);
+            for (int j = 0; j < poly.terms.size(); j++) {
+                termB = poly.terms.get(j);
+                myTerms.add(termA.multiply(termB));
+            }
+        }
+        terms = myTerms;
+        return new Polynomial(terms);
+    }
+
+    
     public void printPolynomial(){
         System.out.println("");
         for(Term t: this.terms){
