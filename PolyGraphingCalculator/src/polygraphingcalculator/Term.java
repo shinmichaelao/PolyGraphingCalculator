@@ -30,8 +30,12 @@ public class Term {
     public String toString(){
         String c;
         if (this.coeff == (int) this.coeff){
-            if (this.coeff != 0)
-                c = Integer.toString((int) this.coeff);
+            if (this.coeff == 1)
+                c = "";
+            else if (this.coeff == -1)
+                c = "-";
+            else if (this.coeff != 0)
+                c = Integer.toString((int) this.coeff);            
             else                
                 return "";
         }
