@@ -1,5 +1,9 @@
 package polygraphingcalculator;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+
 public class GUI extends javax.swing.JFrame {
 
     public GUI() {
@@ -100,7 +104,14 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-
+    
+    public Image getGraphImage(Polynomial f){
+        BufferedImage bi = new BufferedImage(jPanel1.getWidth(), jPanel1.getHeight(), BufferedImage.TYPE_INT_RGB);        
+        Graphics2D g = (Graphics2D) bi.getGraphics();        
+        return bi;
+    }
+    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
