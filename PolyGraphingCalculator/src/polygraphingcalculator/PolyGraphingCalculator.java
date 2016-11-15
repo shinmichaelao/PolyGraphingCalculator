@@ -26,7 +26,7 @@ public class PolyGraphingCalculator {
         Polynomial p1 = new Polynomial("x^2 + 1");
         Polynomial p2 = new Polynomial("x+1");
         Polynomial p3 = p1.polyMultiply(p2);
-        p3.printPolynomial();
+        System.out.println(p3.toString());
     }
     
 }
