@@ -104,18 +104,26 @@ public class Polynomial {
                 termB = poly.terms.get(j);
                 myTerms.add(termA.multiply(termB));
             }
-        }
-        terms = myTerms;
-        return new Polynomial(terms);
+        }        
+        return new Polynomial(myTerms);
     }
 
     
     public String toString(){
-        String nrthsgn = "";
-        for(Term t: this.terms){
-            System.out.print(t.toString()+" ");
+        String qwer = "";
+        for (Term t: this.terms) {
+           String term = t.toString();
+           if (t.coeff > 0)
+               qwer = qwer.concat( "+ " );
+           else if (t.coeff < 0)
+               qwer = qwer.concat ("- ");
+           
+           qwer = qwer.concat(term + " ");
+           
+           
+            
         }
-        return nrthsgn;
+        return qwer;
     }
     
     public void sortByDegree(){
