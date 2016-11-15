@@ -19,12 +19,12 @@ public class PolyGraphingCalculator {
         }
         
         Polynomial testPoly = new Polynomial(array); //sorting opop
-        testPoly.printPolynomial();
-        testPoly.sortByDegree();
-        testPoly.printPolynomial();
 
-        Polynomial kappa = new Polynomial("2x^2 - 5 + 12341 + 5x^2 - 8"); //testing string to polynomial
-        kappa.printPolynomial();
+        testPoly.sortByDegree();
+
+
+        Polynomial kappa = new Polynomial("-x^2 - 5 + 12341 - 8"); //testing string to polynomial
+        System.out.println(kappa.toString());
     }
     
 }
