@@ -42,7 +42,9 @@ public class Polynomial {
             if(coeff.equals("")){
                 coeff = "1";
             }
-            
+            else if(coeff.equals("-")){
+                coeff = "-1";
+            }
             
             //check if there is an "x" portion, otherwise coefficient is 0 like before
             if(cur_char.equals("x")){
