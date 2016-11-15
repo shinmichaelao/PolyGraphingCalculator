@@ -79,7 +79,7 @@ public class Polynomial {
         this.sortByDegree(); //sort this mf
     }
     
-        public Polynomial polyAdd(Polynomial poly){
+    public Polynomial polyAdd(Polynomial poly){
         List<Term> myTerms = new ArrayList();
         myTerms.addAll(this.terms);
         myTerms.addAll(poly.terms);
