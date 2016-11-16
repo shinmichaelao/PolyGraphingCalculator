@@ -212,9 +212,7 @@ public class GUI extends javax.swing.JFrame {
                 i++;
             }
             g.drawPolyline(xValues, yValues, w);
-        }
-        
-        
+        }                
         return bi;
     }
     
