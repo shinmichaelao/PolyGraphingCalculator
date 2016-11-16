@@ -113,24 +113,36 @@ public class Polynomial {
 
     
     public String toString(){
-        String qwer = "";
+        String newString = "";
         for (Term t: this.terms) {
            String term = t.toString();
-           if (t.coeff > 0) 
-              qwer = qwer.concat( "+ " );
-//           else if (t.coeff < 0)
-//               qwer = qwer.concat ("- ");
-           
-           qwer = qwer.concat(term + " ");
-   
+           newString += term;
+//           if (t.coeff > 0){
+//               newString = newString.concat( "+ " );
+//               newString = newString.concat(term + " ");
+//           }
+//           
+//           else if (t.coeff < 0){
+//               double changeSign = Math.abs(t.coeff);
+//               newString = newString.concat( "- " + (int)changeSign +" ");
+//           }
+
         }
-        //if 
-        int indexOfPlus = qwer.indexOf("+");
-        if (indexOfPlus == 0 ){
-            return qwer.substring(2);
+        int indexOfPlus = newString.indexOf("+");
+        int indexOfMinus = newString.indexOf("-");
+        
+        if (indexOfPlus == 1 || indexOfMinus == 1){
+            String a = newString.substring(3);
+           
+            if (indexOfMinus == 1)
+                return ("-" + a);
+            else
+                return a;
+
         }
         else
-            return qwer;
+            return newString;
+ 
     }
     
     public void sortByDegree(){
