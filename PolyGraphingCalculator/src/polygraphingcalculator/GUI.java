@@ -256,20 +256,7 @@ public class GUI extends javax.swing.JFrame {
             }
         });
     }
-    
-//    class GraphPanel extends javax.swing.JPanel{
-//        GraphPanel(){
-//            setPreferredSize(new java.awt.Dimension(800, 640));            
-//        }
-//        
-//        @Override
-//        public void paintComponent(Graphics g){
-//            super.paintComponent(g);
-//            Image img = getGraphImage();
-//            g.drawImage(img, jPanel1.getWidth(), jPanel1.getHeight(), rootPane);
-//        }
-//    }
-//    
+      
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton graphButton;
     private javax.swing.JButton jButton2;
