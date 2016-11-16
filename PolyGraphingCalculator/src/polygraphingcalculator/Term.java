@@ -42,7 +42,7 @@ public class Term {
         else
             c = String.format(".03f", this.coeff);
         if (this.degree < 1)
-            return c;
+            return (Math.abs(this.coeff) == 1 ? Integer.toString((int)this.coeff): c);
         else if (this.degree < 2)
             return String.format("%sx", c);
         else

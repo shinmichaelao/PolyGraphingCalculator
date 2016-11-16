@@ -15,7 +15,6 @@ public class Polynomial {
     
     public Polynomial(String s){
         s = s.replaceAll("\\s+",""); //cleanse the MISOGYNISTIC WHITE SPACES xd
-        
         //the variable i will be the current pointer
         int i = 0;
         while(i < s.length()){
@@ -34,7 +33,6 @@ public class Polynomial {
                         break;
                     }
                 }
-                
                 coeff += cur_char;
                 i++;
             }
@@ -45,11 +43,14 @@ public class Polynomial {
             else if(coeff.equals("-")){
                 coeff = "-1";
             }
-            
+            else if(coeff.equals("+")){
+                coeff = "1";
+            }
             //check if there is an "x" portion, otherwise coefficient is 0 like before
             if(cur_char.equals("x")){
                 //if theres nothing after the x, then the degree is 1
                 if(i == s.length()-1){
+                    i++;
                     degree = "1";
                 }
                 else{
@@ -74,8 +75,8 @@ public class Polynomial {
                     }
                 }
             }
-            
-            this.terms.add(new Term(Double.parseDouble(coeff),Integer.parseInt(degree))); //put together the term
+            Term newTerm = new Term(Double.parseDouble(coeff),Integer.parseInt(degree));
+            this.terms.add(newTerm); //put together the term
         }
         
         this.sortByDegree(); //sort this mf
@@ -106,21 +107,37 @@ public class Polynomial {
                 termB = poly.terms.get(j);
                 myTerms.add(termA.multiply(termB));
             }
-        }
-        terms = myTerms;
-        return new Polynomial(terms);
+        }        
+        return new Polynomial(myTerms);
     }
 
     
     public String toString(){
-        String nrthsgn = "";
-        for(Term t: this.terms){
-            System.out.print(t.toString()+" ");
+        String qwer = "";
+        for (Term t: this.terms) {
+           String term = t.toString();
+           if (t.coeff > 0)
+              qwer = qwer.concat( "+ " );
+//           else if (t.coeff < 0)
+//               qwer = qwer.concat ("- ");
+           
+           qwer = qwer.concat(term + " ");
+           
+           
+            
         }
-        return nrthsgn;
+        return qwer;
     }
     
     public void sortByDegree(){
         this.terms = MergeSort.mergeSort(terms);
+    }
+    
+    public double evaluateAt(double x){
+        double value = 0;
+        for (Term t: this.terms){
+            value += t.coeff*Math.pow(x, t.degree);
+        }
+        return value;
     }
 }
