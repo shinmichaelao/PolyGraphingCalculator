@@ -132,4 +132,12 @@ public class Polynomial {
     public void sortByDegree(){
         this.terms = MergeSort.mergeSort(terms);
     }
+    
+    public double evaluateAt(double x){
+        double value = 0;
+        for (Term t: this.terms){
+            value += t.coeff*Math.pow(x, t.degree);
+        }
+        return value;
+    }
 }
