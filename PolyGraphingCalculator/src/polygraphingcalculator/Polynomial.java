@@ -116,17 +116,21 @@ public class Polynomial {
         String qwer = "";
         for (Term t: this.terms) {
            String term = t.toString();
-           if (t.coeff > 0)
+           if (t.coeff > 0) 
               qwer = qwer.concat( "+ " );
 //           else if (t.coeff < 0)
 //               qwer = qwer.concat ("- ");
            
            qwer = qwer.concat(term + " ");
-           
-           
-            
+   
         }
-        return qwer;
+        //if 
+        int indexOfPlus = qwer.indexOf("+");
+        if (indexOfPlus == 0 ){
+            return qwer.substring(2);
+        }
+        else
+            return qwer;
     }
     
     public void sortByDegree(){
