@@ -15,6 +15,7 @@ public class Polynomial {
     
     public Polynomial(String s){
         s = s.replaceAll("\\s+",""); //cleanse the MISOGYNISTIC WHITE SPACES xd
+        //TODO if last character is - or +, remove it
         //the variable i will be the current pointer
         int i = 0;
         while(i < s.length()){
@@ -28,8 +29,33 @@ public class Polynomial {
                 if(cur_char.equals("x")){
                     break;
                 }
-                else if(cur_char.equals("+") || cur_char.equals("-")){
-                    if(!coeff.equals("")){
+                else if(cur_char.equals("-")){
+                    if(coeff.equals("-")){
+                        coeff = "+";
+                        i++;
+                        continue;
+                    }
+                    else if(coeff.equals("+")){
+                        coeff = "-";
+                        i++;
+                        continue;
+                    }
+                    else if(!coeff.equals("")){
+                        break;
+                    }
+                }
+                else if(cur_char.equals("+")){
+                    if(coeff.equals("-")){
+                        coeff = "-";
+                        i++;
+                        continue;
+                    }
+                    else if(coeff.equals("+")){
+                        coeff = "+";
+                        i++;
+                        continue;
+                    }
+                    else if(!coeff.equals("")){
                         break;
                     }
                 }
@@ -117,16 +143,6 @@ public class Polynomial {
         for (Term t: this.terms) {
            String term = t.toString();
            newString += term;
-//           if (t.coeff > 0){
-//               newString = newString.concat( "+ " );
-//               newString = newString.concat(term + " ");
-//           }
-//           
-//           else if (t.coeff < 0){
-//               double changeSign = Math.abs(t.coeff);
-//               newString = newString.concat( "- " + (int)changeSign +" ");
-//           }
-
         }
         int indexOfPlus = newString.indexOf("+");
         int indexOfMinus = newString.indexOf("-");

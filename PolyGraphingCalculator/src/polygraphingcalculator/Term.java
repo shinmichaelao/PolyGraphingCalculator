@@ -31,11 +31,13 @@ public class Term {
         String c;
         if (this.coeff == (int) this.coeff){
             if (this.coeff == 1)
-                c = " + ";
+                c = " + 1";
             else if (this.coeff == -1)
-                c = " - ";
+                c = " - 1";
             else if (this.coeff > 0)
                 c = " + " + Integer.toString((int) this.coeff);
+            
+            
             else if(this.coeff < 0){
                 c = " - " + Integer.toString((int) -this.coeff);
             }
@@ -45,7 +47,7 @@ public class Term {
         else
             c = String.format(".03f", this.coeff);
         if (this.degree < 1)
-            return (Math.abs(this.coeff) == 1 ? Integer.toString((int)this.coeff): c);
+            return c;
         else if (this.degree < 2)
             return String.format("%sx", c);
         else
