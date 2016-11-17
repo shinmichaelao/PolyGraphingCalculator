@@ -204,6 +204,9 @@
           <Dimension value="[800, 640]"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseWheelMoved" listener="java.awt.event.MouseWheelListener" parameters="java.awt.event.MouseWheelEvent" handler="jPanel1MouseWheelMoved"/>
+      </Events>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -316,6 +319,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Rescale"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rescaleButtonActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

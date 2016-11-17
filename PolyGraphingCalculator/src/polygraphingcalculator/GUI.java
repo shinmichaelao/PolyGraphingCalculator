@@ -84,6 +84,11 @@ public class GUI extends javax.swing.JFrame {
 
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 640));
+        jPanel1.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                jPanel1MouseWheelMoved(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -143,6 +148,11 @@ public class GUI extends javax.swing.JFrame {
         });
 
         rescaleButton.setText("Rescale");
+        rescaleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rescaleButtonActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("New");
         jMenuBar1.add(jMenu1);
@@ -246,6 +256,11 @@ public class GUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void redraw(Graphics g){
+        Image graph = getGraphImage();
+        g.drawImage(graph, 0, 0, rootPane);         
+    }
+    
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
@@ -268,9 +283,9 @@ public class GUI extends javax.swing.JFrame {
     }
     
     private void graphButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_graphButtonActionPerformed
+        this.zoom = 10;
         Graphics g = jPanel1.getGraphics();
-        Image graph = getGraphImage();
-        g.drawImage(graph, 0, 0, rootPane);
+        redraw(g);
     }//GEN-LAST:event_graphButtonActionPerformed
 
     private void clearGraphs(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearGraphs
@@ -288,6 +303,21 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_calculateButtonActionPerformed
 
+    private void jPanel1MouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jPanel1MouseWheelMoved
+        if (evt.getWheelRotation() < 0)
+            this.zoom /= 2;
+        else
+            this.zoom *= 2;
+        Graphics g = jPanel1.getGraphics();
+        redraw(g);      
+    }//GEN-LAST:event_jPanel1MouseWheelMoved
+
+    private void rescaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rescaleButtonActionPerformed
+        this.zoom = 10;
+        Graphics g = jPanel1.getGraphics();
+        redraw(g);
+    }//GEN-LAST:event_rescaleButtonActionPerformed
+
     public Image getGraphImage(){
         double yMin = centreY - zoom;
         double yMax = centreY + zoom;
@@ -303,10 +333,10 @@ public class GUI extends javax.swing.JFrame {
         g.setColor(Color.black);
         
         for (Polynomial f: storedPolynomials){
-            int[] xValues = new int[w];
-            int[] yValues = new int[w];
+            int[] xValues = new int[(int)(w*(xMax - xMin)/(2*zoom))];
+            int[] yValues = new int[xValues.length];
             int i = 0;
-            for (double x=xMin; x<=xMax; x+=2*zoom/w){
+            for (double x=xMin; x<xMax; x+=(double)2*zoom/w){
                 double y = f.evaluateAt(x);
                 xValues[i] = (int) Math.round(w*(x - xMin)/(xMax-xMin));
                 yValues[i] = (int) Math.round(h*(yMax - y)/(yMax - yMin));
