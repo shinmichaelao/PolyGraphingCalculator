@@ -47,9 +47,6 @@ public class GUI extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         calculateButton = new javax.swing.JButton();
         rescaleButton = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -89,6 +86,11 @@ public class GUI extends javax.swing.JFrame {
                 jPanel1MouseWheelMoved(evt);
             }
         });
+        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel1MouseDragged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -98,7 +100,7 @@ public class GUI extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 616, Short.MAX_VALUE)
+            .addGap(0, 637, Short.MAX_VALUE)
         );
 
         storeButton.setText("Store");
@@ -154,14 +156,6 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
-        jMenu1.setText("New");
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Reset");
-        jMenuBar1.add(jMenu2);
-
-        setJMenuBar(jMenuBar1);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -211,7 +205,7 @@ public class GUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 637, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -289,6 +283,9 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_graphButtonActionPerformed
 
     private void clearGraphs(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearGraphs
+        this.zoom = 10;
+        this.centreX = 0;
+        this.centreY = 0;
         storedPolynomials = new ArrayList();
         Graphics g = jPanel1.getGraphics();
         g.setColor(Color.white);
@@ -314,9 +311,18 @@ public class GUI extends javax.swing.JFrame {
 
     private void rescaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rescaleButtonActionPerformed
         this.zoom = 10;
+        this.centreX = 0;
+        this.centreY = 0;
         Graphics g = jPanel1.getGraphics();
         redraw(g);
     }//GEN-LAST:event_rescaleButtonActionPerformed
+
+    private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
+        //this.centreX = evt.getX(); DO NOT USE THIS CODE
+        //this.centreY = evt.getY(); IT DOESN'T WORK
+        Graphics g = jPanel1.getGraphics();
+        redraw(g);
+    }//GEN-LAST:event_jPanel1MouseDragged
 
     public Image getGraphImage(){
         double yMin = centreY - zoom;
@@ -333,7 +339,7 @@ public class GUI extends javax.swing.JFrame {
         g.setColor(Color.black);
         
         for (Polynomial f: storedPolynomials){
-            int[] xValues = new int[(int)(w*(xMax - xMin)/(2*zoom))];
+            int[] xValues = new int[(int)(w*(xMax - xMin)/(2*zoom))+1];
             int[] yValues = new int[xValues.length];
             int i = 0;
             for (double x=xMin; x<xMax; x+=(double)2*zoom/w){
@@ -394,9 +400,6 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
