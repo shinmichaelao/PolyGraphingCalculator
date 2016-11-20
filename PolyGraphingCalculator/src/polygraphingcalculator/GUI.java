@@ -31,8 +31,6 @@ public class GUI extends javax.swing.JFrame {
         jFrame1 = new javax.swing.JFrame();
         graphButton = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         storeButton = new javax.swing.JButton();
         polyBox1 = new javax.swing.JComboBox<>();
@@ -75,10 +73,6 @@ public class GUI extends javax.swing.JFrame {
                 jTextField1ActionPerformed(evt);
             }
         });
-
-        jButton2.setText("Derivative");
-
-        jButton3.setText("Integral");
 
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 640));
@@ -179,12 +173,7 @@ public class GUI extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
                         .addComponent(resultLabel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(rescaleButton)
-                        .addGap(12, 12, 12)
-                        .addComponent(jButton2)))
-                .addGap(6, 6, 6)
-                .addComponent(jButton3))
+                    .addComponent(rescaleButton)))
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(jLabel1)
@@ -230,12 +219,7 @@ public class GUI extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(resultLabel))
                         .addGap(373, 373, 373)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rescaleButton)
-                            .addComponent(jButton2)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(624, 624, 624)
-                        .addComponent(jButton3)))
+                        .addComponent(rescaleButton)))
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -465,8 +449,6 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JButton calculateButton;
     private javax.swing.JButton graphButton;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
