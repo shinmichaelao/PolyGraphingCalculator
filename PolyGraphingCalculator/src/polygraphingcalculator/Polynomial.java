@@ -5,8 +5,7 @@ import java.util.List;
 
 
 public class Polynomial {
-    List<Term> terms = new ArrayList();
-    static final double maxValue = Math.pow(2, 31)-1;
+    List<Term> terms = new ArrayList();    
     
     public Polynomial(List<Term> t){
         this.terms = t;
@@ -170,7 +169,7 @@ public class Polynomial {
         double next;
         for (Term t: this.terms){
             next = t.coeff*Math.pow(x, t.degree);
-            if (maxValue - Math.abs(next+3) < Math.abs(value)){
+            if (PolyGraphingCalculator.maxValue - Math.abs(next+3) < Math.abs(value)){
                 throw new java.lang.ArithmeticException();
             }
             value += next;
