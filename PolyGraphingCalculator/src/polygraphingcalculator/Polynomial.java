@@ -13,8 +13,7 @@ public class Polynomial {
     }
     
     public Polynomial(String s){
-        s = s.replaceAll("\\s+",""); //cleanse the MISOGYNISTIC WHITE SPACES xd
-        //TODO if last character is - or +, remove it
+        s = s.replaceAll("\\s+",""); //removes the white space
         //the variable i will be the current pointer
         int i = 0;
         while(i < s.length()){
@@ -62,15 +61,17 @@ public class Polynomial {
                 i++;
             }
             
-            if(coeff.equals("")){
+            //special cases
+            if(coeff.equals("")){ //nothing in front of an x
                 coeff = "1";
             }
-            else if(coeff.equals("-")){
+            else if(coeff.equals("-")){//negative sign in front of x
                 coeff = "-1";
             }
-            else if(coeff.equals("+")){
+            else if(coeff.equals("+")){//only a + sign in front of x
                 coeff = "1";
             }
+            
             //check if there is an "x" portion, otherwise coefficient is 0 like before
             if(cur_char.equals("x")){
                 //if theres nothing after the x, then the degree is 1
@@ -87,7 +88,7 @@ public class Polynomial {
                             break;
                         }
                         
-                        if(cur_char.equals("^")){
+                        if(cur_char.equals("^")){//skip the carat
                             i++;
                             continue;
                         }
@@ -95,7 +96,7 @@ public class Polynomial {
                         i++;
                     }
                     
-                    if(degree.equals("0")){
+                    if(degree.equals("0")){// Example: x+1 when we get to the + sign, the loop breaks and the degree variable never changes but the degree should be 1
                         degree = "1";
                     }
                 }
