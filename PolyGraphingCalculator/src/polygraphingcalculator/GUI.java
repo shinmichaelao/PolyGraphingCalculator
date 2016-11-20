@@ -92,17 +92,7 @@ public class GUI extends javax.swing.JFrame {
                 jPanel1MouseDragged(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 637, Short.MAX_VALUE)
-        );
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         storeButton.setText("Store");
         storeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -302,6 +292,7 @@ public class GUI extends javax.swing.JFrame {
         Graphics g = jPanel1.getGraphics();
         g.setColor(Color.white);
         g.fillRect(0, 0, jPanel1.getWidth(), jPanel1.getHeight());
+        this.remodel();
     }//GEN-LAST:event_clearGraphs
 
     private void calculateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateButtonActionPerformed
@@ -335,7 +326,7 @@ public class GUI extends javax.swing.JFrame {
         if (evt.getWheelRotation() < 0)
             this.zoom /= 2;
         else
-            this.zoom *= 2;
+            this.zoom = Math.min(this.zoom*2, Math.pow(2, 30));
         Graphics g = jPanel1.getGraphics();
         redraw(g);      
     }//GEN-LAST:event_jPanel1MouseWheelMoved
@@ -349,8 +340,15 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_rescaleButtonActionPerformed
 
     private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
-        //this.centreX = evt.getX(); DO NOT USE THIS CODE
-        //this.centreY = evt.getY(); IT DOESN'T WORK
+        //Really basic rn, doesn't quite work
+        double yMin = centreY - zoom;
+        double yMax = centreY + zoom;
+        double xMin = centreX - zoom;
+        double xMax = centreX + zoom;
+        int w = jPanel1.getWidth();
+        int h = jPanel1.getHeight();         
+        this.centreX = (int) Math.round(evt.getX()*(xMax-xMin)/w + xMin);
+        this.centreY = (int) Math.round(yMax - evt.getY()*(yMax-yMin)/h);
         Graphics g = jPanel1.getGraphics();
         redraw(g);
     }//GEN-LAST:event_jPanel1MouseDragged
@@ -380,6 +378,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_ModeBoxItemStateChanged
 
     public Image getGraphImage(){
+        //Calculate necessary points
         double yMin = centreY - zoom;
         double yMax = centreY + zoom;
         double xMin = centreX - zoom;
@@ -390,20 +389,40 @@ public class GUI extends javax.swing.JFrame {
         Graphics2D g = (Graphics2D) bi.getGraphics();
         
         g.setColor(Color.white);
-        g.fillRect(0, 0, w, h);
-        g.setColor(Color.black);
+        g.fillRect(0, 0, w, h);        
+        //Some axes here
+        g.setColor(Color.red);
+        int originX = (int) Math.round(-w*xMin/(xMax-xMin));
+        int originY = (int) Math.round(h*yMax/(yMax - yMin));
+        g.drawLine(0, originY, w, originY);
+        g.drawLine(originX, 0, originX, h);
         
+        g.setColor(Color.black);        
         for (Polynomial f: storedPolynomials){
-            int[] xValues = new int[(int)(w*(xMax - xMin)/(2*zoom))+1];
-            int[] yValues = new int[xValues.length];
+            //Graph each function as an ArrayList of points            
+            List<Integer> xValues = new ArrayList();
+            List<Integer> yValues = new ArrayList();
             int i = 0;
-            for (double x=xMin; x<xMax; x+=(double)2*zoom/w){
-                double y = f.evaluateAt(x);
-                xValues[i] = (int) Math.round(w*(x - xMin)/(xMax-xMin));
-                yValues[i] = (int) Math.round(h*(yMax - y)/(yMax - yMin));
+            //The value of x tracks across the screen, pixel by pixel
+            for (double x=xMin; x<xMax; x+=(double)2*zoom/w){                
+                try{ //Stores new points if the point wasn't an overflow
+                    double y = f.evaluateAt(x);      
+                    xValues.add((int) Math.round(w*(x - xMin)/(xMax-xMin)));
+                    yValues.add((int) Math.round(h*(yMax - y)/(yMax - yMin)));
+                } catch (java.lang.ArithmeticException e) {                    
+                }
                 i++;
             }
-            g.drawPolyline(xValues, yValues, w);
+            //Convert ArrayList to int[] in order to plot the points
+            Object[] x = xValues.toArray();
+            Object[] y = yValues.toArray();
+            int[] xV = new int[x.length];
+            int[] yV = new int[y.length];                    
+            for (int k=0; k<x.length; k++) {
+                xV[k] = (int) x[k];
+                yV[k] = (int) y[k];
+            }
+            g.drawPolyline(xV, yV, xV.length);
         }                
         return bi;
     }
