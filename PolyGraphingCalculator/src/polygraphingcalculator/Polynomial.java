@@ -164,11 +164,14 @@ public class Polynomial {
         this.terms = MergeSort.mergeSort(terms);
     }
     
-    public double evaluateAt(double x){
+    public double evaluateAt(double x) throws java.lang.ArithmeticException{
         double value = 0;
+        double next;
         for (Term t: this.terms){
-            value += t.coeff*Math.pow(x, t.degree);
-        }        
+            next = t.coeff*Math.pow(x, t.degree);
+            value = Math.addExact((int) value, (int) next) + value%1 + next%1;
+            Math.addExact((int) value, 2);
+        }
         return value;
     }
 }

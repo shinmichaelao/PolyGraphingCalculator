@@ -305,7 +305,7 @@ public class GUI extends javax.swing.JFrame {
         if (evt.getWheelRotation() < 0)
             this.zoom /= 2;
         else
-            this.zoom = Math.min(this.zoom*2, Math.pow(2, 30)-1);
+            this.zoom = Math.min(this.zoom*2, Math.pow(2, 30));
         Graphics g = jPanel1.getGraphics();
         redraw(g);      
     }//GEN-LAST:event_jPanel1MouseWheelMoved
@@ -340,16 +340,27 @@ public class GUI extends javax.swing.JFrame {
         g.setColor(Color.black);
         
         for (Polynomial f: storedPolynomials){
-            int[] xValues = new int[(int)(w*(xMax - xMin)/(2*zoom))+1];
-            int[] yValues = new int[xValues.length];
+            List<Integer> xValues = new ArrayList();
+            List<Integer> yValues = new ArrayList();
             int i = 0;
-            for (double x=xMin; x<xMax; x+=(double)2*zoom/w){
-                double y = f.evaluateAt(x);
-                xValues[i] = (int) Math.round(w*(x - xMin)/(xMax-xMin));
-                yValues[i] = (int) Math.round(h*(yMax - y)/(yMax - yMin));
+            for (double x=xMin; x<xMax; x+=(double)2*zoom/w){                
+                try{
+                    double y = f.evaluateAt(x);      
+                    xValues.add((int) Math.round(w*(x - xMin)/(xMax-xMin)));
+                    yValues.add((int) Math.round(h*(yMax - y)/(yMax - yMin)));
+                } catch (java.lang.ArithmeticException e) {                    
+                }
                 i++;
             }
-            g.drawPolyline(xValues, yValues, w);
+            Object[] x = xValues.toArray();
+            Object[] y = yValues.toArray();
+            int[] xV = new int[x.length];
+            int[] yV = new int[y.length];                    
+            for (int k=0; k<x.length; k++) {
+                xV[k] = (int) x[k];
+                yV[k] = (int) y[k];
+            }
+            g.drawPolyline(xV, yV, xV.length);
         }                
         return bi;
     }
