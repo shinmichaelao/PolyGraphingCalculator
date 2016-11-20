@@ -30,12 +30,18 @@ public class Term {
     public String toString(){
         String c;
         if (this.coeff == (int) this.coeff){
-            if (this.coeff == 1)
+            if (this.coeff == 1 && this.degree == 0)
                 c = " + 1";
-            else if (this.coeff == -1)
+            else if (this.coeff == 1)
+                c = " + ";
+            else if (this.coeff == -1 && this.degree == 0)
                 c = " - 1";
+            else if (this.coeff == -1)
+                c = " - ";
             else if (this.coeff > 0)
                 c = " + " + Integer.toString((int) this.coeff);
+
+
             else if(this.coeff < 0){
                 c = " - " + Integer.toString((int) -this.coeff);
             }
@@ -43,7 +49,7 @@ public class Term {
                 return "";
         }
         else
-            c = String.format(".03f", this.coeff);
+            c = String.format("%.03f", this.coeff);
         if (this.degree < 1)
             return c;
         else if (this.degree < 2)
