@@ -143,6 +143,11 @@ public class GUI extends javax.swing.JFrame {
         resultLabel.setText("0");
 
         storeResultButton.setText("Store Result");
+        storeResultButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                storeResultButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -289,23 +294,25 @@ public class GUI extends javax.swing.JFrame {
     private void calculateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateButtonActionPerformed
         //NEEDS WORK
         Polynomial result = null;
+        Polynomial p1 = (Polynomial)polyBox1.getSelectedItem();
+        Polynomial p2 = (Polynomial)polyBox2.getSelectedItem();
         if(mode.equals("Addition")){
-            Polynomial p1 = (Polynomial)polyBox1.getSelectedItem();
-            Polynomial p2 = (Polynomial)polyBox2.getSelectedItem();
+            
             result = p1.polyAdd(p2);
         }
         else if(mode.equals("Subtraction")){
-            Polynomial p1 = (Polynomial)polyBox1.getSelectedItem();
-            Polynomial p2 = (Polynomial)polyBox2.getSelectedItem();
+            //Polynomial p1 = (Polynomial)polyBox1.getSelectedItem();
+            //Polynomial p2 = (Polynomial)polyBox2.getSelectedItem();
             result = p1.polySubtract(p2);
         }
         else if(mode.equals("Multiplication")){
-            Polynomial p1 = (Polynomial)polyBox1.getSelectedItem();
-            Polynomial p2 = (Polynomial)polyBox2.getSelectedItem();
+            //Polynomial p1 = (Polynomial)polyBox1.getSelectedItem();
+            //Polynomial p2 = (Polynomial)polyBox2.getSelectedItem();
             result = p1.polyMultiply(p2);
         }
         else if(mode.equals("Derivative")){
             //TODO code
+            
         }
         else{ //guessinig this is integral
             //TODO code
@@ -367,6 +374,11 @@ public class GUI extends javax.swing.JFrame {
         polyBox2.setVisible(visible);
         
     }//GEN-LAST:event_ModeBoxItemStateChanged
+
+    private void storeResultButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storeResultButtonActionPerformed
+        storedPolynomials.add(new Polynomial(resultLabel.getText()));
+        this.remodel();
+    }//GEN-LAST:event_storeResultButtonActionPerformed
 
     public Image getGraphImage(){
         //Calculate necessary points
