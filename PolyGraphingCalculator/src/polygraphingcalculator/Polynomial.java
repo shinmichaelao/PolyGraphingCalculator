@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Polynomial {
     List<Term> terms = new ArrayList();
+    static final double maxValue = Math.pow(2, 31)-1;
     
     public Polynomial(List<Term> t){
         this.terms = t;
@@ -169,8 +170,10 @@ public class Polynomial {
         double next;
         for (Term t: this.terms){
             next = t.coeff*Math.pow(x, t.degree);
-            value = Math.addExact((int) value, (int) next) + value%1 + next%1;
-            Math.addExact((int) value, 2);
+            if (maxValue - Math.abs(next+3) < Math.abs(value)){
+                throw new java.lang.ArithmeticException();
+            }
+            value += next;
         }
         return value;
     }
