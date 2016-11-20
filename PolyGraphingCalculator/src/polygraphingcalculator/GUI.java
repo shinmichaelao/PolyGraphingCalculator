@@ -66,7 +66,6 @@ public class GUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1200, 640));
         setPreferredSize(new java.awt.Dimension(1200, 640));
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         graphButton.setText("Graph");
         graphButton.addActionListener(new java.awt.event.ActionListener() {
@@ -74,7 +73,6 @@ public class GUI extends javax.swing.JFrame {
                 graphButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(graphButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(879, 494, 71, -1));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -95,7 +93,6 @@ public class GUI extends javax.swing.JFrame {
             }
         });
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         storeButton.setText("Store");
         storeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -103,16 +100,12 @@ public class GUI extends javax.swing.JFrame {
                 storeButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(storeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 80, -1, -1));
 
         polyBox1.setModel(polyBox1Model);
-        getContentPane().add(polyBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 210, -1, -1));
 
         polyBox2.setModel(polyBox2Model);
-        getContentPane().add(polyBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 270, -1, -1));
 
         jLabel1.setText("y=");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(838, 45, -1, -1));
 
         clearAllButton.setText("Clear All");
         clearAllButton.addActionListener(new java.awt.event.ActionListener() {
@@ -120,19 +113,14 @@ public class GUI extends javax.swing.JFrame {
                 clearGraphs(evt);
             }
         });
-        getContentPane().add(clearAllButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 80, -1, -1));
 
         jLabel2.setText("Polynomial 1: y =");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(865, 219, -1, -1));
 
         jLabel3.setText("Polynomial 2: y =");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(862, 277, -1, -1));
 
         resultLabel2.setText("Result:");
-        getContentPane().add(resultLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(906, 345, -1, -1));
 
         operationLabel.setText("Added With:");
-        getContentPane().add(operationLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(888, 247, -1, -1));
 
         ModeBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Addition", "Subtraction", "Multiplication", "Division", "Derivative", "Integral" }));
         ModeBox.addItemListener(new java.awt.event.ItemListener() {
@@ -140,10 +128,8 @@ public class GUI extends javax.swing.JFrame {
                 ModeBoxItemStateChanged(evt);
             }
         });
-        getContentPane().add(ModeBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 180, -1, -1));
 
         jLabel6.setText("Calculator Mode:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(862, 181, -1, -1));
 
         calculateButton.setText("Calculate");
         calculateButton.addActionListener(new java.awt.event.ActionListener() {
@@ -151,7 +137,6 @@ public class GUI extends javax.swing.JFrame {
                 calculateButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(calculateButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(906, 312, -1, -1));
 
         rescaleButton.setText("Reset Zoom");
         rescaleButton.addActionListener(new java.awt.event.ActionListener() {
@@ -159,10 +144,8 @@ public class GUI extends javax.swing.JFrame {
                 rescaleButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(rescaleButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(976, 494, -1, -1));
 
         resultLabel.setText("0");
-        getContentPane().add(resultLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(958, 345, -1, -1));
 
         storeResultButton.setText("Store Result");
         storeResultButton.setEnabled(false);
@@ -171,11 +154,9 @@ public class GUI extends javax.swing.JFrame {
                 storeResultButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(storeResultButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(906, 370, -1, -1));
 
         inputBox.setEditable(true);
         inputBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "x^2 - 5x + 6" }));
-        getContentPane().add(inputBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(862, 42, 199, -1));
 
         removeButton.setText("Remove");
         removeButton.setEnabled(false);
@@ -184,7 +165,109 @@ public class GUI extends javax.swing.JFrame {
                 removeButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(removeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 80, -1, -1));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel1)
+                        .addGap(10, 10, 10)
+                        .addComponent(inputBox, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(storeButton)
+                        .addGap(21, 21, 21)
+                        .addComponent(removeButton)
+                        .addGap(19, 19, 19)
+                        .addComponent(clearAllButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabel6)
+                        .addGap(17, 17, 17)
+                        .addComponent(ModeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(jLabel2)
+                        .addGap(12, 12, 12)
+                        .addComponent(polyBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addComponent(operationLabel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabel3)
+                        .addGap(15, 15, 15)
+                        .addComponent(polyBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addComponent(calculateButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addComponent(resultLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(resultLabel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addComponent(storeResultButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(graphButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(rescaleButton))))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel1))
+                    .addComponent(inputBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(storeButton)
+                    .addComponent(removeButton)
+                    .addComponent(clearAllButton))
+                .addGap(77, 77, 77)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jLabel6))
+                    .addComponent(ModeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jLabel2))
+                    .addComponent(polyBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
+                .addComponent(operationLabel)
+                .addGap(9, 9, 9)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(jLabel3))
+                    .addComponent(polyBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addComponent(calculateButton)
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(resultLabel2)
+                    .addComponent(resultLabel))
+                .addGap(11, 11, 11)
+                .addComponent(storeResultButton)
+                .addGap(101, 101, 101)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(graphButton)
+                    .addComponent(rescaleButton)))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
