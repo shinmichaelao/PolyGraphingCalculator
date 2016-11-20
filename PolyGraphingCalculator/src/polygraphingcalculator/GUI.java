@@ -34,8 +34,8 @@ public class GUI extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         storeButton = new javax.swing.JButton();
-        polyBox1 = new javax.swing.JComboBox<String>();
-        polyBox2 = new javax.swing.JComboBox<String>();
+        polyBox1 = new javax.swing.JComboBox<>();
+        polyBox2 = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -91,17 +91,7 @@ public class GUI extends javax.swing.JFrame {
                 jPanel1MouseDragged(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 637, Short.MAX_VALUE)
-        );
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         storeButton.setText("Store");
         storeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -319,8 +309,15 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_rescaleButtonActionPerformed
 
     private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
-        //this.centreX = evt.getX(); DO NOT USE THIS CODE
-        //this.centreY = evt.getY(); IT DOESN'T WORK
+        //Really basic rn, doesn't quite work
+        double yMin = centreY - zoom;
+        double yMax = centreY + zoom;
+        double xMin = centreX - zoom;
+        double xMax = centreX + zoom;
+        int w = jPanel1.getWidth();
+        int h = jPanel1.getHeight();         
+        this.centreX = (int) Math.round(evt.getX()*(xMax-xMin)/w + xMin);
+        this.centreY = (int) Math.round(yMax - evt.getY()*(yMax-yMin)/h);
         Graphics g = jPanel1.getGraphics();
         redraw(g);
     }//GEN-LAST:event_jPanel1MouseDragged
