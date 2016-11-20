@@ -40,8 +40,8 @@ public class Term {
                 c = " - ";
             else if (this.coeff > 0)
                 c = " + " + Integer.toString((int) this.coeff);
-            
-            
+
+
             else if(this.coeff < 0){
                 c = " - " + Integer.toString((int) -this.coeff);
             }

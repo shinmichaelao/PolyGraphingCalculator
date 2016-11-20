@@ -1,4 +1,3 @@
-
 package polygraphingcalculator;
 
 import java.util.ArrayList;
@@ -6,28 +5,13 @@ import java.util.List;
 
 
 public class Polynomial {
-    List<Term> terms = new ArrayList();
+    List<Term> terms = new ArrayList();    
     
     public Polynomial(List<Term> t){
         this.terms = t;
         this.sortByDegree();
-        
-    }
-    public Polynomial getDerivative(){
-        List<Term> myTerms = new ArrayList();
-        for (int i = 0; i < this.terms.size(); i++) {
-            myTerms.add(this.terms.get(i).getDerivative());
-        }
-        return new Polynomial(myTerms);
     }
     
-    public Polynomial getIntegral(){
-        List<Term> myTerms = new ArrayList();
-        for (int i = 0; i < this.terms.size(); i++) {
-            myTerms.add(this.terms.get(i).getIntegral());
-        }
-        return new Polynomial(myTerms);
-    }
     public Polynomial(String s){
         s = s.replaceAll("\\s+",""); //cleanse the MISOGYNISTIC WHITE SPACES xd
         //TODO if last character is - or +, remove it
@@ -180,10 +164,15 @@ public class Polynomial {
         this.terms = MergeSort.mergeSort(terms);
     }
     
-    public double evaluateAt(double x){
+    public double evaluateAt(double x) throws java.lang.ArithmeticException{
         double value = 0;
+        double next;
         for (Term t: this.terms){
-            value += t.coeff*Math.pow(x, t.degree);
+            next = t.coeff*Math.pow(x, t.degree);
+            if (PolyGraphingCalculator.maxValue - Math.abs(next+3) < Math.abs(value)){
+                throw new java.lang.ArithmeticException();
+            }
+            value += next;
         }
         return value;
     }
