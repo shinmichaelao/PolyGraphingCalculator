@@ -140,10 +140,10 @@ public class GUI extends javax.swing.JFrame {
                 ModeBoxItemStateChanged(evt);
             }
         });
-        getContentPane().add(ModeBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 180, -1, -1));
+        getContentPane().add(ModeBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 170, -1, -1));
 
         jLabel6.setText("Calculator Mode:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(862, 181, -1, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 180, -1, -1));
 
         calculateButton.setText("Calculate");
         calculateButton.addActionListener(new java.awt.event.ActionListener() {
@@ -260,11 +260,10 @@ public class GUI extends javax.swing.JFrame {
             result = p1.polyMultiply(p2);
         }
         else if(mode.equals("Derivative")){
-            //TODO code
-            
+            result = p1.getDerivative();
         }
         else{ //This is integral
-            //TODO code
+            result = p1.getIntegral();
         }
         resultLabel.setText(result.toString());
         storeResultButton.setEnabled(true);

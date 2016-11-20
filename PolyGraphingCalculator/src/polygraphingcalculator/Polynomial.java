@@ -137,6 +137,21 @@ public class Polynomial {
         return new Polynomial(myTerms);
     }
 
+    public Polynomial getDerivative(){
+        List<Term> myTerms = new ArrayList();
+        for (int i = 0; i < this.terms.size(); i++) {
+            myTerms.add(this.terms.get(i).getDerivative());
+        }
+        return new Polynomial(myTerms);
+    }
+    
+    public Polynomial getIntegral(){
+        List<Term> myTerms = new ArrayList();
+        for (int i = 0; i < this.terms.size(); i++) {
+            myTerms.add(this.terms.get(i).getIntegral());
+        }
+        return new Polynomial(myTerms);
+    }
     
     public String toString(){
         String newString = "";
