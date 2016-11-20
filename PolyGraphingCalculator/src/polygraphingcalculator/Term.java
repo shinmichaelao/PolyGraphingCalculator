@@ -15,7 +15,7 @@ public class Term {
     }
     
     public Term getIntegral(){
-        return new Term(this.coeff/this.degree, this.degree+1);
+        return new Term(this.coeff/(this.degree+1), this.degree+1);
     }
     
     public Term add(Term t){
@@ -36,8 +36,6 @@ public class Term {
                 c = " - 1";
             else if (this.coeff > 0)
                 c = " + " + Integer.toString((int) this.coeff);
-            
-            
             else if(this.coeff < 0){
                 c = " - " + Integer.toString((int) -this.coeff);
             }
