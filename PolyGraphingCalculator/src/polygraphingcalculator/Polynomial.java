@@ -11,8 +11,23 @@ public class Polynomial {
     public Polynomial(List<Term> t){
         this.terms = t;
         this.sortByDegree();
+        
+    }
+    public Polynomial getDerivative(){
+        List<Term> myTerms = new ArrayList();
+        for (int i = 0; i < this.terms.size(); i++) {
+            myTerms.add(this.terms.get(i).getDerivative());
+        }
+        return new Polynomial(myTerms);
     }
     
+    public Polynomial getIntegral(){
+        List<Term> myTerms = new ArrayList();
+        for (int i = 0; i < this.terms.size(); i++) {
+            myTerms.add(this.terms.get(i).getIntegral());
+        }
+        return new Polynomial(myTerms);
+    }
     public Polynomial(String s){
         s = s.replaceAll("\\s+",""); //cleanse the MISOGYNISTIC WHITE SPACES xd
         //TODO if last character is - or +, remove it
