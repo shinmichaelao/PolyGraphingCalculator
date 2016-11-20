@@ -1,10 +1,4 @@
-
 package polygraphingcalculator;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 
 public class PolyGraphingCalculator {
 
@@ -14,7 +8,7 @@ public class PolyGraphingCalculator {
         System.out.println(test1.toString());
         //Polynomial test2 = new Polynomial(" -10x + 20x + 15");
        // System.out.println(test2.toString());
-        //GUI.main(args);
+        GUI.main(args);
         
     }
     

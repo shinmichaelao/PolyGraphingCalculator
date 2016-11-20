@@ -1,4 +1,3 @@
-
 package polygraphingcalculator;
 
 import java.util.ArrayList;
@@ -169,7 +168,7 @@ public class Polynomial {
         double value = 0;
         for (Term t: this.terms){
             value += t.coeff*Math.pow(x, t.degree);
-        }
+        }        
         return value;
     }
 }

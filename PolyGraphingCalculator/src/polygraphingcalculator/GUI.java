@@ -290,6 +290,7 @@ public class GUI extends javax.swing.JFrame {
         Graphics g = jPanel1.getGraphics();
         g.setColor(Color.white);
         g.fillRect(0, 0, jPanel1.getWidth(), jPanel1.getHeight());
+        this.remodel();
     }//GEN-LAST:event_clearGraphs
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
@@ -304,7 +305,7 @@ public class GUI extends javax.swing.JFrame {
         if (evt.getWheelRotation() < 0)
             this.zoom /= 2;
         else
-            this.zoom *= 2;
+            this.zoom = Math.min(this.zoom*2, Math.pow(2, 30)-1);
         Graphics g = jPanel1.getGraphics();
         redraw(g);      
     }//GEN-LAST:event_jPanel1MouseWheelMoved
