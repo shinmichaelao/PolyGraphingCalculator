@@ -323,6 +323,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel1MouseDragged
 
     public Image getGraphImage(){
+        //Calculate necessary points
         double yMin = centreY - zoom;
         double yMax = centreY + zoom;
         double xMin = centreX - zoom;
@@ -333,15 +334,23 @@ public class GUI extends javax.swing.JFrame {
         Graphics2D g = (Graphics2D) bi.getGraphics();
         
         g.setColor(Color.white);
-        g.fillRect(0, 0, w, h);
-        g.setColor(Color.black);
+        g.fillRect(0, 0, w, h);        
+        //Some axes here
+        g.setColor(Color.red);
+        int originX = (int) Math.round(-w*xMin/(xMax-xMin));
+        int originY = (int) Math.round(h*yMax/(yMax - yMin));
+        g.drawLine(0, originY, w, originY);
+        g.drawLine(originX, 0, originX, h);
         
+        g.setColor(Color.black);        
         for (Polynomial f: storedPolynomials){
+            //Graph each function as an ArrayList of points            
             List<Integer> xValues = new ArrayList();
             List<Integer> yValues = new ArrayList();
             int i = 0;
+            //The value of x tracks across the screen, pixel by pixel
             for (double x=xMin; x<xMax; x+=(double)2*zoom/w){                
-                try{
+                try{ //Stores new points if the point wasn't an overflow
                     double y = f.evaluateAt(x);      
                     xValues.add((int) Math.round(w*(x - xMin)/(xMax-xMin)));
                     yValues.add((int) Math.round(h*(yMax - y)/(yMax - yMin)));
@@ -349,6 +358,7 @@ public class GUI extends javax.swing.JFrame {
                 }
                 i++;
             }
+            //Convert ArrayList to int[] in order to plot the points
             Object[] x = xValues.toArray();
             Object[] y = yValues.toArray();
             int[] xV = new int[x.length];
