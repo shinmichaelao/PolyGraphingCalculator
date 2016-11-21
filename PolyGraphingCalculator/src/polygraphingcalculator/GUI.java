@@ -511,7 +511,6 @@ public class GUI extends javax.swing.JFrame {
             //Graph each function as an ArrayList of points            
             List<Integer> xValues = new ArrayList();
             List<Integer> yValues = new ArrayList();
-            int i = 0;
             //The value of x tracks across the screen, pixel by pixel
             for (double x=xMin; x<xMax; x+=(double)2*zoom/w){                
                 try{ //Stores new points if the point wasn't an overflow
@@ -520,16 +519,15 @@ public class GUI extends javax.swing.JFrame {
                     yValues.add((int) Math.round(h*(yMax - y)/(yMax - yMin)));
                 } catch (java.lang.ArithmeticException e) {                    
                 }
-                i++;
             }
             //Convert ArrayList to int[] in order to plot the points
             Object[] x = xValues.toArray();
             Object[] y = yValues.toArray();
             int[] xV = new int[x.length];
             int[] yV = new int[y.length];                    
-            for (int k=0; k<x.length; k++) {
-                xV[k] = (int) x[k];
-                yV[k] = (int) y[k];
+            for (int i=0; i<x.length; i++) {
+                xV[i] = (int) x[i];
+                yV[i] = (int) y[i];
             }
             g.drawPolyline(xV, yV, xV.length);
         }                
