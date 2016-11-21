@@ -34,6 +34,8 @@ public class GUI extends javax.swing.JFrame {
         jFrame1 = new javax.swing.JFrame();
         graphButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+        xLabel = new javax.swing.JLabel();
+        yLabel = new javax.swing.JLabel();
         storeButton = new javax.swing.JButton();
         polyBox1 = new javax.swing.JComboBox<>();
         polyBox2 = new javax.swing.JComboBox<>();
@@ -91,8 +93,21 @@ public class GUI extends javax.swing.JFrame {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 jPanel1MouseDragged(evt);
             }
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jPanel1MouseMoved(evt);
+            }
         });
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        xLabel.setBackground(new java.awt.Color(255, 255, 255));
+        xLabel.setText("X: ");
+        xLabel.setOpaque(true);
+        jPanel1.add(xLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        yLabel.setBackground(new java.awt.Color(255, 255, 255));
+        yLabel.setText("Y: ");
+        yLabel.setOpaque(true);
+        jPanel1.add(yLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, -1, -1));
 
         storeButton.setText("Store");
         storeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -436,6 +451,12 @@ public class GUI extends javax.swing.JFrame {
         mouseY = evt.getY();
     }//GEN-LAST:event_jPanel1MouseClicked
 
+    private void jPanel1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseMoved
+        // TODO add your handling code here:
+        xLabel.setText("X: "+ ( evt.getX() - 400 ));
+        yLabel.setText("Y: "+ ( 320-evt.getY() ));
+    }//GEN-LAST:event_jPanel1MouseMoved
+
     public Image getGraphImage(){
         //Calculate necessary points
         double yMin = centreY - zoom;
@@ -540,5 +561,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel resultLabel2;
     private javax.swing.JButton storeButton;
     private javax.swing.JButton storeResultButton;
+    private javax.swing.JLabel xLabel;
+    private javax.swing.JLabel yLabel;
     // End of variables declaration//GEN-END:variables
 }
