@@ -3,7 +3,7 @@ package polygraphingcalculator;
 
 public class Term {
     double coeff;
-    final int degree;
+    int degree;
     
     public Term(double c, int d) {
         this.coeff = c;

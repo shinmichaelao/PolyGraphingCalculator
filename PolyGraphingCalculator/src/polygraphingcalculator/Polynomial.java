@@ -141,7 +141,53 @@ public class Polynomial {
         }        
         return new Polynomial(myTerms);
     }
-
+    
+    public Polynomial[] polyDivide(Polynomial poly){
+        List<Term> quotient = addZeroes(this.terms);
+        List<Term> divisor = addZeroes(poly.terms);
+        double botCoeff = divisor.get(0).coeff;
+        for(int i = 0; i < quotient.size() - divisor.size() + 1;i++){
+            Term qCurTerm = quotient.get(i);
+            qCurTerm.coeff /= botCoeff;
+            
+            double curCoeff = qCurTerm.coeff;
+            if(curCoeff != 0){
+                for(int j = 1;j < divisor.size();j++){
+                    Term qModTerm = quotient.get(i+j);
+                    qModTerm.coeff += -divisor.get(j).coeff * curCoeff;
+                }
+            }
+        }
+        
+        Polynomial actualQuotient = new Polynomial(quotient.subList(0, quotient.size()-divisor.size()+1));
+        for(Term t: actualQuotient.terms){
+            t.degree -= divisor.size()-1;
+        }
+        Polynomial remainder = new Polynomial(quotient.subList(quotient.size()-divisor.size()+1, quotient.size()));
+        
+        Polynomial[] returnStuff = {actualQuotient, remainder};
+        return returnStuff;
+    }
+    
+    public static List<Term> addZeroes(List<Term> myTerms){
+        for(int i = 0; i<myTerms.size();i++){
+            Term curTerm = myTerms.get(i);
+            if(curTerm.degree == 0){
+                break;
+            }
+            else if(i == myTerms.size() - 1){
+                myTerms.add(new Term(0,curTerm.degree - 1));
+            }
+            else{
+                Term nextTerm = myTerms.get(i+1);
+                if(curTerm.degree != nextTerm.degree + 1){
+                    myTerms.add(i+1, new Term(0,curTerm.degree-1));
+                }
+            }
+        }
+        return myTerms;
+    }
+    
     public Polynomial getDerivative(){
         List<Term> myTerms = new ArrayList();
         for (int i = 0; i < this.terms.size(); i++) {

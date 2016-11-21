@@ -383,6 +383,10 @@ public class GUI extends javax.swing.JFrame {
         else if(mode.equals("Multiplication")){
             result = p1.polyMultiply(p2);
         }
+        else if(mode.equals("Division")){
+            result = p1.polyDivide(p2)[0];
+            //skipping the remainder right now lmao its bad I know
+        }
         else if(mode.equals("Derivative")){
             result = p1.getDerivative();
         }
@@ -395,7 +399,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void jPanel1MouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jPanel1MouseWheelMoved
         if (evt.getWheelRotation() < 0)
-            this.zoom /= 2;
+            this.zoom = Math.max(this.zoom / 2, 0.01);
         else
             this.zoom = Math.min(this.zoom*2, PolyGraphingCalculator.maxValue);
         Graphics g = jPanel1.getGraphics();
