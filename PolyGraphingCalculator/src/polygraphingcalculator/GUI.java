@@ -5,6 +5,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -386,7 +389,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
         
-        double interval = zoom*.008;
+        double interval = zoom*.015;
         if(evt.getX() > mouseX){
             centreX -= interval;
         }
@@ -452,11 +455,20 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel1MouseClicked
 
     private void jPanel1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseMoved
-        // TODO add your handling code here:
-        xLabel.setText("X: "+ ( evt.getX() - 400 ));
-        yLabel.setText("Y: "+ ( 320-evt.getY() ));
+        double xLoc = 2*zoom*(evt.getX() - 400)/800 + centreX;
+        double yLoc = 2*zoom*(320 - evt.getY())/640 + centreY;
+        xLabel.setText("X: "+ format(xLoc));
+        yLabel.setText("Y: "+ format(yLoc));
     }//GEN-LAST:event_jPanel1MouseMoved
-
+    
+    public static String format(Number n) {
+        NumberFormat format = DecimalFormat.getInstance();
+        format.setRoundingMode(RoundingMode.FLOOR);
+        format.setMinimumFractionDigits(0);
+        format.setMaximumFractionDigits(3);
+        return format.format(n);
+    }
+    
     public Image getGraphImage(){
         //Calculate necessary points
         double yMin = centreY - zoom;

@@ -13,99 +13,104 @@ public class Polynomial {
     }
     
     public Polynomial(String s){
-        s = s.replaceAll("\\s+",""); //removes the white space
-        //the variable i will be the current pointer
-        int i = 0;
-        while(i < s.length()){
-            String coeff = "";
-            String degree = "0";
-            String cur_char = "";
-            
-            //get the coefficient
+        if(s.equals("0")){
+            this.terms.add(new Term(0,0));
+        }
+        else{
+            s = s.replaceAll("\\s+",""); //removes the white space
+            //the variable i will be the current pointer
+            int i = 0;
             while(i < s.length()){
-                cur_char = s.substring(i,i+1);
-                if(cur_char.equals("x")){
-                    break;
-                }
-                else if(cur_char.equals("-")){
-                    if(coeff.equals("-")){
-                        coeff = "+";
-                        i++;
-                        continue;
-                    }
-                    else if(coeff.equals("+")){
-                        coeff = "-";
-                        i++;
-                        continue;
-                    }
-                    else if(!coeff.equals("")){
+                String coeff = "";
+                String degree = "0";
+                String cur_char = "";
+
+                //get the coefficient
+                while(i < s.length()){
+                    cur_char = s.substring(i,i+1);
+                    if(cur_char.equals("x")){
                         break;
                     }
-                }
-                else if(cur_char.equals("+")){
-                    if(coeff.equals("-")){
-                        coeff = "-";
-                        i++;
-                        continue;
-                    }
-                    else if(coeff.equals("+")){
-                        coeff = "+";
-                        i++;
-                        continue;
-                    }
-                    else if(!coeff.equals("")){
-                        break;
-                    }
-                }
-                coeff += cur_char;
-                i++;
-            }
-            
-            //special cases
-            if(coeff.equals("")){ //nothing in front of an x
-                coeff = "1";
-            }
-            else if(coeff.equals("-")){//negative sign in front of x
-                coeff = "-1";
-            }
-            else if(coeff.equals("+")){//only a + sign in front of x
-                coeff = "1";
-            }
-            
-            //check if there is an "x" portion, otherwise coefficient is 0 like before
-            if(cur_char.equals("x")){
-                //if theres nothing after the x, then the degree is 1
-                if(i == s.length()-1){
-                    i++;
-                    degree = "1";
-                }
-                else{
-                //check the next few characters until we get to a " " or  "+" or "-"
-                    i++;
-                    while(i<s.length()){
-                        cur_char = s.substring(i,i+1);
-                        if(cur_char.equals("+") || cur_char.equals("-")){
-                            break;
-                        }
-                        
-                        if(cur_char.equals("^")){//skip the carat
+                    else if(cur_char.equals("-")){
+                        if(coeff.equals("-")){
+                            coeff = "+";
                             i++;
                             continue;
                         }
-                        degree += cur_char;
-                        i++;
+                        else if(coeff.equals("+")){
+                            coeff = "-";
+                            i++;
+                            continue;
+                        }
+                        else if(!coeff.equals("")){
+                            break;
+                        }
                     }
-                    
-                    if(degree.equals("0")){// Example: x+1 when we get to the + sign, the loop breaks and the degree variable never changes but the degree should be 1
+                    else if(cur_char.equals("+")){
+                        if(coeff.equals("-")){
+                            coeff = "-";
+                            i++;
+                            continue;
+                        }
+                        else if(coeff.equals("+")){
+                            coeff = "+";
+                            i++;
+                            continue;
+                        }
+                        else if(!coeff.equals("")){
+                            break;
+                        }
+                    }
+                    coeff += cur_char;
+                    i++;
+                }
+
+                //special cases
+                if(coeff.equals("")){ //nothing in front of an x
+                    coeff = "1";
+                }
+                else if(coeff.equals("-")){//negative sign in front of x
+                    coeff = "-1";
+                }
+                else if(coeff.equals("+")){//only a + sign in front of x
+                    coeff = "1";
+                }
+
+                //check if there is an "x" portion, otherwise coefficient is 0 like before
+                if(cur_char.equals("x")){
+                    //if theres nothing after the x, then the degree is 1
+                    if(i == s.length()-1){
+                        i++;
                         degree = "1";
                     }
+                    else{
+                    //check the next few characters until we get to a " " or  "+" or "-"
+                        i++;
+                        while(i<s.length()){
+                            cur_char = s.substring(i,i+1);
+                            if(cur_char.equals("+") || cur_char.equals("-")){
+                                break;
+                            }
+
+                            if(cur_char.equals("^")){//skip the carat
+                                i++;
+                                continue;
+                            }
+                            degree += cur_char;
+                            i++;
+                        }
+
+                        if(degree.equals("0")){// Example: x+1 when we get to the + sign, the loop breaks and the degree variable never changes but the degree should be 1
+                            degree = "1";
+                        }
+                    }
                 }
+                Term newTerm = new Term(Double.parseDouble(coeff),Integer.parseInt(degree));
+                this.terms.add(newTerm); //put together the term
             }
-            Term newTerm = new Term(Double.parseDouble(coeff),Integer.parseInt(degree));
-            this.terms.add(newTerm); //put together the term
+
+            this.sortByDegree(); //sort this mf
         }
-        
-        this.sortByDegree(); //sort this mf
     }
     
     public Polynomial polyAdd(Polynomial poly){
@@ -162,7 +167,10 @@ public class Polynomial {
         int indexOfPlus = newString.indexOf("+");
         int indexOfMinus = newString.indexOf("-");
         
-        if (indexOfPlus == 1 || indexOfMinus == 1){
+        if(newString.equals("")){
+            return "0";
+        }
+        else if (indexOfPlus == 1 || indexOfMinus == 1){
             String a = newString.substring(3);
            
             if (indexOfMinus == 1)
