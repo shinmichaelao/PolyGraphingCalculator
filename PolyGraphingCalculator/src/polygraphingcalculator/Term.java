@@ -40,16 +40,18 @@ public class Term {
                 c = " - ";
             else if (this.coeff > 0)
                 c = " + " + Integer.toString((int) this.coeff);
-
-
             else if(this.coeff < 0){
                 c = " - " + Integer.toString((int) -this.coeff);
             }
             else                
                 return "";
         }
-        else
-            c = String.format("%.03f", this.coeff);
+        else if(this.coeff > 0){
+            c = String.format(" + %.03f", this.coeff);
+        }
+        else{
+            c = String.format(" - %.03f", -this.coeff);
+        }
         if (this.degree < 1)
             return c;
         else if (this.degree < 2)

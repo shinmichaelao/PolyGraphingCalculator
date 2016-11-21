@@ -455,8 +455,10 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel1MouseClicked
 
     private void jPanel1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseMoved
-        double xLoc = 2*zoom*(evt.getX() - 400)/800 + centreX;
-        double yLoc = 2*zoom*(320 - evt.getY())/640 + centreY;
+        int panelWidth = jPanel1.getWidth();
+        int panelHeight = jPanel1.getHeight();
+        double xLoc = 2*zoom*(evt.getX() - panelWidth/2)/panelWidth + centreX;
+        double yLoc = 2*zoom*(panelHeight/2 - evt.getY())/panelHeight + centreY;
         xLabel.setText("X: "+ format(xLoc));
         yLabel.setText("Y: "+ format(yLoc));
     }//GEN-LAST:event_jPanel1MouseMoved
