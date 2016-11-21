@@ -23,8 +23,13 @@ public class GUI extends javax.swing.JFrame {
     //Dragging variables
     int mouseX = 0;
     int mouseY = 0;
+    
+    int w, h;
+    
     public GUI() {
         initComponents();
+        this.w = jPanel1.getWidth();
+        this.h = jPanel1.getHeight();
     }
 
     @SuppressWarnings("unchecked")
@@ -66,8 +71,9 @@ public class GUI extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(1200, 640));
-        setPreferredSize(new java.awt.Dimension(1200, 640));
+        setMinimumSize(new java.awt.Dimension(1200, 676));
+        setPreferredSize(new java.awt.Dimension(1200, 676));
+        setSize(new java.awt.Dimension(1200, 676));
 
         graphButton.setText("Graph");
         graphButton.addActionListener(new java.awt.event.ActionListener() {
@@ -79,6 +85,14 @@ public class GUI extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 640));
+        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel1MouseDragged(evt);
+            }
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jPanel1MouseMoved(evt);
+            }
+        });
         jPanel1.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
             public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
                 jPanel1MouseWheelMoved(evt);
@@ -87,14 +101,6 @@ public class GUI extends javax.swing.JFrame {
         jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel1MouseClicked(evt);
-            }
-        });
-        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                jPanel1MouseDragged(evt);
-            }
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jPanel1MouseMoved(evt);
             }
         });
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -291,6 +297,23 @@ public class GUI extends javax.swing.JFrame {
         Image graph = getGraphImage();
         g.drawImage(graph, 0, 0, rootPane);         
     }
+    
+    public void clearImage(Graphics g){
+        double yMin = centreY - zoom;
+        double yMax = centreY + zoom;
+        double xMin = centreX - zoom;
+        double xMax = centreX + zoom;
+        
+        g.setColor(Color.white);
+        g.fillRect(0, 0, w, h);
+        //Some axes here
+        g.setColor(Color.red);
+        int originX = (int) Math.round(-w*xMin/(xMax-xMin));
+        int originY = (int) Math.round(h*yMax/(yMax - yMin));
+        g.drawLine(0, originY, w, originY);
+        g.drawLine(originX, 0, originX, h);
+        
+    }
         
     private void storeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storeButtonActionPerformed
         String text = (String)inputBox.getSelectedItem();
@@ -337,8 +360,8 @@ public class GUI extends javax.swing.JFrame {
         this.centreY = 0;
         storedPolynomials = new ArrayList();
         Graphics g = jPanel1.getGraphics();
-        g.setColor(Color.white);
-        g.fillRect(0, 0, jPanel1.getWidth(), jPanel1.getHeight());
+        clearImage(g);
+        resultLabel.setText("");
         this.remodel();
     }//GEN-LAST:event_clearGraphs
 
@@ -463,19 +486,11 @@ public class GUI extends javax.swing.JFrame {
         double yMax = centreY + zoom;
         double xMin = centreX - zoom;
         double xMax = centreX + zoom;
-        int w = jPanel1.getWidth();
-        int h = jPanel1.getHeight();     
+  
         BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);        
         Graphics2D g = (Graphics2D) bi.getGraphics();
         
-        g.setColor(Color.white);
-        g.fillRect(0, 0, w, h);        
-        //Some axes here
-        g.setColor(Color.red);
-        int originX = (int) Math.round(-w*xMin/(xMax-xMin));
-        int originY = (int) Math.round(h*yMax/(yMax - yMin));
-        g.drawLine(0, originY, w, originY);
-        g.drawLine(originX, 0, originX, h);
+        clearImage(g);
         
         g.setColor(Color.black);        
         for (Polynomial f: storedPolynomials){
