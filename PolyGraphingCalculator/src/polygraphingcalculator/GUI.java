@@ -397,7 +397,7 @@ public class GUI extends javax.swing.JFrame {
         if (evt.getWheelRotation() < 0)
             this.zoom /= 2;
         else
-            this.zoom = Math.min(this.zoom*2, Math.pow(2, 30));
+            this.zoom = Math.min(this.zoom*2, PolyGraphingCalculator.maxValue);
         Graphics g = jPanel1.getGraphics();
         redraw(g);      
     }//GEN-LAST:event_jPanel1MouseWheelMoved
@@ -442,7 +442,7 @@ public class GUI extends javax.swing.JFrame {
             operationLabel.setText("Subtracted By:");
         }
         else if(mode.equals("Multiplication")){
-            operationLabel.setText("Multiplied With:");
+            operationLabel.setText("Multiplied By:");
         }
         else if(mode.equals("Division")){
             operationLabel.setText("Divided By:");

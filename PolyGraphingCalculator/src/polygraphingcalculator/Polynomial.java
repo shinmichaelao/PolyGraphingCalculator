@@ -190,10 +190,15 @@ public class Polynomial {
     
     public double evaluateAt(double x) throws java.lang.ArithmeticException{
         double value = 0;
-        double next;
+        double next, exp;
         for (Term t: this.terms){
-            next = t.coeff*Math.pow(x, t.degree);
-            if (PolyGraphingCalculator.maxValue - Math.abs(next+3) < Math.abs(value)){
+            //Check whether an exponentiation causes overflow
+            if (t.degree*Math.log(Math.abs(x)) > PolyGraphingCalculator.lnMaxValue){
+                throw new java.lang.ArithmeticException();
+            }
+            next = t.coeff * Math.pow(x, t.degree);
+            //Check whether addition causes overflow
+            if (next > (PolyGraphingCalculator.maxValue - value) || next < -(PolyGraphingCalculator.maxValue + value)){
                 throw new java.lang.ArithmeticException();
             }
             value += next;
