@@ -80,6 +80,7 @@ public class GUI extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1200, 676));
 
         graphButton.setText("Graph");
+        graphButton.setEnabled(false);
         graphButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 graphButtonActionPerformed(evt);
@@ -193,6 +194,7 @@ public class GUI extends javax.swing.JFrame {
         });
 
         graphAllButton.setText("Graph All");
+        graphAllButton.setEnabled(false);
         graphAllButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 graphAllButtonActionPerformed(evt);
@@ -356,6 +358,8 @@ public class GUI extends javax.swing.JFrame {
             storedPolynomials.add( p );
             this.remodel();
             removeButton.setEnabled(true);
+            graphButton.setEnabled(true);
+            graphAllButton.setEnabled(true);
         }
     }
     public void remodel(){
@@ -501,6 +505,8 @@ public class GUI extends javax.swing.JFrame {
                 clearGraphs(evt);
                 calculateButton.setEnabled(false);
                 removeButton.setEnabled(false);
+                graphButton.setEnabled(false);
+                graphAllButton.setEnabled(false);                
             }
             this.remodel();
         }

@@ -180,6 +180,7 @@
     <Component class="javax.swing.JButton" name="graphButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Graph"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="graphButtonActionPerformed"/>
@@ -377,6 +378,7 @@
     <Component class="javax.swing.JButton" name="graphAllButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Graph All"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="graphAllButtonActionPerformed"/>
