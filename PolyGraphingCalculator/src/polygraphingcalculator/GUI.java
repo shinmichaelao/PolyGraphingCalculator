@@ -18,6 +18,7 @@ public class GUI extends javax.swing.JFrame {
     DefaultComboBoxModel polyBox1Model = new DefaultComboBoxModel();
     DefaultComboBoxModel polyBox2Model = new DefaultComboBoxModel(); 
     String mode = "Addition";
+    String graphed = "";
     //Centre of the screen (x, y)
     double centreX = 0;
     double centreY = 0;
@@ -45,8 +46,8 @@ public class GUI extends javax.swing.JFrame {
         xLabel = new javax.swing.JLabel();
         yLabel = new javax.swing.JLabel();
         storeButton = new javax.swing.JButton();
-        polyBox1 = new javax.swing.JComboBox<>();
-        polyBox2 = new javax.swing.JComboBox<>();
+        polyBox1 = new javax.swing.JComboBox<String>();
+        polyBox2 = new javax.swing.JComboBox<String>();
         jLabel1 = new javax.swing.JLabel();
         clearAllButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -59,8 +60,10 @@ public class GUI extends javax.swing.JFrame {
         rescaleButton = new javax.swing.JButton();
         resultLabel = new javax.swing.JLabel();
         storeResultButton = new javax.swing.JButton();
-        inputBox = new javax.swing.JComboBox<>();
+        inputBox = new javax.swing.JComboBox<String>();
         removeButton = new javax.swing.JButton();
+        graphAllButton = new javax.swing.JButton();
+        secretPlusC = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -75,8 +78,6 @@ public class GUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1200, 676));
-        setPreferredSize(new java.awt.Dimension(1200, 676));
-        setSize(new java.awt.Dimension(1200, 676));
 
         graphButton.setText("Graph");
         graphButton.addActionListener(new java.awt.event.ActionListener() {
@@ -156,6 +157,7 @@ public class GUI extends javax.swing.JFrame {
         jLabel6.setText("Calculator Mode:");
 
         calculateButton.setText("Calculate");
+        calculateButton.setEnabled(false);
         calculateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 calculateButtonActionPerformed(evt);
@@ -180,7 +182,7 @@ public class GUI extends javax.swing.JFrame {
         });
 
         inputBox.setEditable(true);
-        inputBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "x^2 - 5x + 6" }));
+        inputBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "x^2 - 5x + 6" }));
 
         removeButton.setText("Remove");
         removeButton.setEnabled(false);
@@ -190,16 +192,23 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
+        graphAllButton.setText("Graph All");
+        graphAllButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                graphAllButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel1)
                         .addGap(10, 10, 10)
                         .addComponent(inputBox, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -207,42 +216,45 @@ public class GUI extends javax.swing.JFrame {
                         .addComponent(storeButton)
                         .addGap(21, 21, 21)
                         .addComponent(removeButton)
-                        .addGap(19, 19, 19)
+                        .addGap(29, 29, 29)
                         .addComponent(clearAllButton))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
+                        .addComponent(graphButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(graphAllButton)
+                        .addGap(25, 25, 25)
+                        .addComponent(rescaleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
                         .addComponent(jLabel6)
                         .addGap(9, 9, 9)
                         .addComponent(ModeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
+                        .addGap(50, 50, 50)
                         .addComponent(jLabel2)
-                        .addGap(12, 12, 12)
+                        .addGap(17, 17, 17)
                         .addComponent(polyBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
+                        .addGap(80, 80, 80)
                         .addComponent(operationLabel))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
+                        .addGap(50, 50, 50)
                         .addComponent(jLabel3)
-                        .addGap(15, 15, 15)
+                        .addGap(17, 17, 17)
                         .addComponent(polyBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(76, 76, 76)
+                        .addGap(100, 100, 100)
                         .addComponent(calculateButton))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(76, 76, 76)
+                        .addGap(100, 100, 100)
                         .addComponent(resultLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(resultLabel))
+                        .addGap(16, 16, 16)
+                        .addComponent(resultLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(secretPlusC))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(76, 76, 76)
-                        .addComponent(storeResultButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(graphButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(rescaleButton))))
+                        .addGap(100, 100, 100)
+                        .addComponent(storeResultButton))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,12 +266,17 @@ public class GUI extends javax.swing.JFrame {
                         .addGap(3, 3, 3)
                         .addComponent(jLabel1))
                     .addComponent(inputBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(storeButton)
                     .addComponent(removeButton)
                     .addComponent(clearAllButton))
-                .addGap(67, 67, 67)
+                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(graphButton)
+                    .addComponent(graphAllButton)
+                    .addComponent(rescaleButton))
+                .addGap(87, 87, 87)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
@@ -268,38 +285,43 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
+                        .addGap(10, 10, 10)
                         .addComponent(jLabel2))
                     .addComponent(polyBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14)
+                .addGap(16, 16, 16)
                 .addComponent(operationLabel)
-                .addGap(9, 9, 9)
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
+                        .addGap(10, 10, 10)
                         .addComponent(jLabel3))
                     .addComponent(polyBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
+                .addGap(26, 26, 26)
                 .addComponent(calculateButton)
-                .addGap(10, 10, 10)
+                .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(resultLabel2)
-                    .addComponent(resultLabel))
-                .addGap(11, 11, 11)
-                .addComponent(storeResultButton)
-                .addGap(101, 101, 101)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(graphButton)
-                    .addComponent(rescaleButton)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(resultLabel)
+                        .addComponent(secretPlusC)))
+                .addGap(6, 6, 6)
+                .addComponent(storeResultButton))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     public void redraw(Graphics g){
-        Image graph = getGraphImage();
+        Image graph;
+        if (graphed.equals("all")){
+            graph = getAllGraphImage();
+        }
+        else{
+            graph = getSelectedGraphImage();
+        }
         g.drawImage(graph, 0, 0, rootPane);         
     }
+    
     
     public void clearImage(Graphics g){
         double yMin = centreY - zoom;
@@ -314,13 +336,13 @@ public class GUI extends javax.swing.JFrame {
         int originX = (int) Math.round(-w*xMin/(xMax-xMin));
         int originY = (int) Math.round(h*yMax/(yMax - yMin));
         g.drawLine(0, originY, w, originY);
-        g.drawLine(originX, 0, originX, h);
-        
+        g.drawLine(originX, 0, originX, h);        
     }
         
     private void storeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storeButtonActionPerformed
         String text = (String)inputBox.getSelectedItem();
         this.store(new Polynomial(text));
+        calculateButton.setEnabled(true);
     }//GEN-LAST:event_storeButtonActionPerformed
     public void store(Polynomial p){
         boolean duplicate = false;
@@ -354,6 +376,7 @@ public class GUI extends javax.swing.JFrame {
     private void graphButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_graphButtonActionPerformed
         this.zoom = 10;
         Graphics g = jPanel1.getGraphics();
+        graphed = "selected";
         redraw(g);
     }//GEN-LAST:event_graphButtonActionPerformed
 
@@ -362,6 +385,7 @@ public class GUI extends javax.swing.JFrame {
         this.centreX = 0;
         this.centreY = 0;
         storedPolynomials = new ArrayList();
+        calculateButton.setEnabled(false);
         Graphics g = jPanel1.getGraphics();
         clearImage(g);
         resultLabel.setText("");
@@ -373,6 +397,7 @@ public class GUI extends javax.swing.JFrame {
         Polynomial result = null;
         Polynomial p1 = new Polynomial((String)polyBox1.getSelectedItem());
         Polynomial p2 = new Polynomial((String)polyBox2.getSelectedItem());
+        secretPlusC.setText("");
         
         if(mode.equals("Addition")){
             result = p1.polyAdd(p2);
@@ -384,7 +409,9 @@ public class GUI extends javax.swing.JFrame {
             result = p1.polyMultiply(p2);
         }
         else if(mode.equals("Division")){
-            result = p1.polyDivide(p2)[0];
+            Polynomial[] quotient = p1.polyDivide(p2);
+            result = quotient[0];
+            secretPlusC.setText("Remainder: " + quotient[1].toString());
             //skipping the remainder right now lmao its bad I know
         }
         else if(mode.equals("Derivative")){
@@ -392,6 +419,7 @@ public class GUI extends javax.swing.JFrame {
         }
         else{ //This is integral
             result = p1.getIntegral();
+            secretPlusC.setText(" + C");
         }
         resultLabel.setText(result.toString());
         storeResultButton.setEnabled(true);
@@ -470,6 +498,8 @@ public class GUI extends javax.swing.JFrame {
         if(removeIndex != -1){
             storedPolynomials.remove(removeIndex);
             if(storedPolynomials.isEmpty()){
+                clearGraphs(evt);
+                calculateButton.setEnabled(false);
                 removeButton.setEnabled(false);
             }
             this.remodel();
@@ -482,13 +512,18 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel1MouseClicked
 
     private void jPanel1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseMoved
-        int panelWidth = jPanel1.getWidth();
-        int panelHeight = jPanel1.getHeight();
-        double xLoc = 2*zoom*(evt.getX() - panelWidth/2)/panelWidth + centreX;
-        double yLoc = 2*zoom*(panelHeight/2 - evt.getY())/panelHeight + centreY;
+        double xLoc = 2*zoom*(evt.getX() - w/2)/w + centreX;
+        double yLoc = 2*zoom*(h/2 - evt.getY())/h + centreY;
         xLabel.setText("X: "+ format(xLoc));
         yLabel.setText("Y: "+ format(yLoc));
     }//GEN-LAST:event_jPanel1MouseMoved
+
+    private void graphAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_graphAllButtonActionPerformed
+        this.zoom = 10;
+        Graphics g = jPanel1.getGraphics();
+        graphed = "all";
+        redraw(g);
+    }//GEN-LAST:event_graphAllButtonActionPerformed
     
     public static String format(Number n) {
         NumberFormat format = DecimalFormat.getInstance();
@@ -498,7 +533,7 @@ public class GUI extends javax.swing.JFrame {
         return format.format(n);
     }
     
-    public Image getGraphImage(){
+    public Image getAllGraphImage(){
         //Calculate necessary points
         double yMin = centreY - zoom;
         double yMax = centreY + zoom;
@@ -512,30 +547,78 @@ public class GUI extends javax.swing.JFrame {
         
         g.setColor(Color.black);        
         for (Polynomial f: storedPolynomials){
-            //Graph each function as an ArrayList of points            
-            List<Integer> xValues = new ArrayList();
-            List<Integer> yValues = new ArrayList();
-            //The value of x tracks across the screen, pixel by pixel
-            for (double x=xMin; x<xMax; x+=(double)2*zoom/w){                
-                try{ //Stores new points if the point wasn't an overflow
-                    double y = f.evaluateAt(x);      
-                    xValues.add((int) Math.round(w*(x - xMin)/(xMax-xMin)));
-                    yValues.add((int) Math.round(h*(yMax - y)/(yMax - yMin)));
-                } catch (java.lang.ArithmeticException e) {                    
-                }
+        //Graph each function as an ArrayList of points            
+        List<Integer> xValues = new ArrayList();
+        List<Integer> yValues = new ArrayList();
+        //The value of x tracks across the screen, pixel by pixel
+        for (double x=xMin; x<xMax; x+=(double)2*zoom/w){                
+            try{ //Stores new points if the point wasn't an overflow
+                double y = f.evaluateAt(x);      
+                xValues.add((int) Math.round(w*(x - xMin)/(xMax-xMin)));
+                yValues.add((int) Math.round(h*(yMax - y)/(yMax - yMin)));
+            } catch (java.lang.ArithmeticException e) {                    
             }
-            //Convert ArrayList to int[] in order to plot the points
-            Object[] x = xValues.toArray();
-            Object[] y = yValues.toArray();
-            int[] xV = new int[x.length];
-            int[] yV = new int[y.length];                    
-            for (int i=0; i<x.length; i++) {
-                xV[i] = (int) x[i];
-                yV[i] = (int) y[i];
-            }
-            g.drawPolyline(xV, yV, xV.length);
+        }
+        //Convert ArrayList to int[] in order to plot the points
+        Object[] x = xValues.toArray();
+        Object[] y = yValues.toArray();
+        int[] xV = new int[x.length];
+        int[] yV = new int[y.length];                    
+        for (int i=0; i<x.length; i++) {
+            xV[i] = (int) x[i];
+            yV[i] = (int) y[i];
+        }
+        g.drawPolyline(xV, yV, xV.length);
         }                
         return bi;
+    }
+    
+    public Image getSelectedGraphImage(){
+        //Calculate necessary points
+        double yMin = centreY - zoom;
+        double yMax = centreY + zoom;
+        double xMin = centreX - zoom;
+        double xMax = centreX + zoom;
+  
+        BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);        
+        Graphics2D g = (Graphics2D) bi.getGraphics();
+        
+        clearImage(g);
+        
+        g.setColor(Color.black);
+        
+        int index = inputBox.getSelectedIndex();
+        
+        if (index == -1){
+            return bi;
+        }
+        Polynomial f = storedPolynomials.get(index);
+        
+        //Graph the selected function as an ArrayList of points            
+        List<Integer> xValues = new ArrayList();
+        List<Integer> yValues = new ArrayList();
+        //The value of x tracks across the screen, pixel by pixel
+        for (double x=xMin; x<xMax; x+=(double)2*zoom/w){                
+            try{ //Stores new points if the point wasn't an overflow
+                double y = f.evaluateAt(x);      
+                xValues.add((int) Math.round(w*(x - xMin)/(xMax-xMin)));
+                yValues.add((int) Math.round(h*(yMax - y)/(yMax - yMin)));
+            } catch (java.lang.ArithmeticException e) {                    
+            }
+        }
+        //Convert ArrayList to int[] in order to plot the points
+        Object[] x = xValues.toArray();
+        Object[] y = yValues.toArray();
+        int[] xV = new int[x.length];
+        int[] yV = new int[y.length];                    
+        for (int i=0; i<x.length; i++) {
+            xV[i] = (int) x[i];
+            yV[i] = (int) y[i];
+        }
+        g.drawPolyline(xV, yV, xV.length);
+        
+        return bi;                
+
     }
     
     
@@ -575,6 +658,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JComboBox ModeBox;
     private javax.swing.JButton calculateButton;
     private javax.swing.JButton clearAllButton;
+    private javax.swing.JButton graphAllButton;
     private javax.swing.JButton graphButton;
     private javax.swing.JComboBox<String> inputBox;
     private javax.swing.JFrame jFrame1;
@@ -590,6 +674,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JButton rescaleButton;
     private javax.swing.JLabel resultLabel;
     private javax.swing.JLabel resultLabel2;
+    private javax.swing.JLabel secretPlusC;
     private javax.swing.JButton storeButton;
     private javax.swing.JButton storeResultButton;
     private javax.swing.JLabel xLabel;
