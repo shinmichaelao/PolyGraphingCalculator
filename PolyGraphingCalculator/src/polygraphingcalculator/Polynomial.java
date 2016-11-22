@@ -13,98 +13,104 @@ public class Polynomial {
     }
     
     public Polynomial(String s){
-        s = s.replaceAll("\\s+",""); //cleanse the MISOGYNISTIC WHITE SPACES xd
-        //TODO if last character is - or +, remove it
-        //the variable i will be the current pointer
-        int i = 0;
-        while(i < s.length()){
-            String coeff = "";
-            String degree = "0";
-            String cur_char = "";
-            
-            //get the coefficient
+        if(s.equals("0")){
+            this.terms.add(new Term(0,0));
+        }
+        else{
+            s = s.replaceAll("\\s+",""); //removes the white space
+            //the variable i will be the current pointer
+            int i = 0;
             while(i < s.length()){
-                cur_char = s.substring(i,i+1);
-                if(cur_char.equals("x")){
-                    break;
-                }
-                else if(cur_char.equals("-")){
-                    if(coeff.equals("-")){
-                        coeff = "+";
-                        i++;
-                        continue;
-                    }
-                    else if(coeff.equals("+")){
-                        coeff = "-";
-                        i++;
-                        continue;
-                    }
-                    else if(!coeff.equals("")){
+                String coeff = "";
+                String degree = "0";
+                String cur_char = "";
+
+                //get the coefficient
+                while(i < s.length()){
+                    cur_char = s.substring(i,i+1);
+                    if(cur_char.equals("x")){
                         break;
                     }
-                }
-                else if(cur_char.equals("+")){
-                    if(coeff.equals("-")){
-                        coeff = "-";
-                        i++;
-                        continue;
-                    }
-                    else if(coeff.equals("+")){
-                        coeff = "+";
-                        i++;
-                        continue;
-                    }
-                    else if(!coeff.equals("")){
-                        break;
-                    }
-                }
-                coeff += cur_char;
-                i++;
-            }
-            
-            if(coeff.equals("")){
-                coeff = "1";
-            }
-            else if(coeff.equals("-")){
-                coeff = "-1";
-            }
-            else if(coeff.equals("+")){
-                coeff = "1";
-            }
-            //check if there is an "x" portion, otherwise coefficient is 0 like before
-            if(cur_char.equals("x")){
-                //if theres nothing after the x, then the degree is 1
-                if(i == s.length()-1){
-                    i++;
-                    degree = "1";
-                }
-                else{
-                //check the next few characters until we get to a " " or  "+" or "-"
-                    i++;
-                    while(i<s.length()){
-                        cur_char = s.substring(i,i+1);
-                        if(cur_char.equals("+") || cur_char.equals("-")){
-                            break;
-                        }
-                        
-                        if(cur_char.equals("^")){
+                    else if(cur_char.equals("-")){
+                        if(coeff.equals("-")){
+                            coeff = "+";
                             i++;
                             continue;
                         }
-                        degree += cur_char;
-                        i++;
+                        else if(coeff.equals("+")){
+                            coeff = "-";
+                            i++;
+                            continue;
+                        }
+                        else if(!coeff.equals("")){
+                            break;
+                        }
                     }
-                    
-                    if(degree.equals("0")){
+                    else if(cur_char.equals("+")){
+                        if(coeff.equals("-")){
+                            coeff = "-";
+                            i++;
+                            continue;
+                        }
+                        else if(coeff.equals("+")){
+                            coeff = "+";
+                            i++;
+                            continue;
+                        }
+                        else if(!coeff.equals("")){
+                            break;
+                        }
+                    }
+                    coeff += cur_char;
+                    i++;
+                }
+
+                //special cases
+                if(coeff.equals("")){ //nothing in front of an x
+                    coeff = "1";
+                }
+                else if(coeff.equals("-")){//negative sign in front of x
+                    coeff = "-1";
+                }
+                else if(coeff.equals("+")){//only a + sign in front of x
+                    coeff = "1";
+                }
+
+                //check if there is an "x" portion, otherwise coefficient is 0 like before
+                if(cur_char.equals("x")){
+                    //if theres nothing after the x, then the degree is 1
+                    if(i == s.length()-1){
+                        i++;
                         degree = "1";
                     }
+                    else{
+                    //check the next few characters until we get to a " " or  "+" or "-"
+                        i++;
+                        while(i<s.length()){
+                            cur_char = s.substring(i,i+1);
+                            if(cur_char.equals("+") || cur_char.equals("-")){
+                                break;
+                            }
+
+                            if(cur_char.equals("^")){//skip the carat
+                                i++;
+                                continue;
+                            }
+                            degree += cur_char;
+                            i++;
+                        }
+
+                        if(degree.equals("0")){// Example: x+1 when we get to the + sign, the loop breaks and the degree variable never changes but the degree should be 1
+                            degree = "1";
+                        }
+                    }
                 }
+                Term newTerm = new Term(Double.parseDouble(coeff),Integer.parseInt(degree));
+                this.terms.add(newTerm); //put together the term
             }
-            Term newTerm = new Term(Double.parseDouble(coeff),Integer.parseInt(degree));
-            this.terms.add(newTerm); //put together the term
+
+            this.sortByDegree(); //sort this mf
         }
-        
-        this.sortByDegree(); //sort this mf
     }
     
     public Polynomial polyAdd(Polynomial poly){
@@ -135,7 +141,68 @@ public class Polynomial {
         }        
         return new Polynomial(myTerms);
     }
-
+    
+    public Polynomial[] polyDivide(Polynomial poly){
+        List<Term> quotient = addZeroes(this.terms);
+        List<Term> divisor = addZeroes(poly.terms);
+        double botCoeff = divisor.get(0).coeff;
+        for(int i = 0; i < quotient.size() - divisor.size() + 1;i++){
+            Term qCurTerm = quotient.get(i);
+            qCurTerm.coeff /= botCoeff;
+            
+            double curCoeff = qCurTerm.coeff;
+            if(curCoeff != 0){
+                for(int j = 1;j < divisor.size();j++){
+                    Term qModTerm = quotient.get(i+j);
+                    qModTerm.coeff += -divisor.get(j).coeff * curCoeff;
+                }
+            }
+        }
+        
+        Polynomial actualQuotient = new Polynomial(quotient.subList(0, quotient.size()-divisor.size()+1));
+        for(Term t: actualQuotient.terms){
+            t.degree -= divisor.size()-1;
+        }
+        Polynomial remainder = new Polynomial(quotient.subList(quotient.size()-divisor.size()+1, quotient.size()));
+        
+        Polynomial[] returnStuff = {actualQuotient, remainder};
+        return returnStuff;
+    }
+    
+    public static List<Term> addZeroes(List<Term> myTerms){
+        for(int i = 0; i<myTerms.size();i++){
+            Term curTerm = myTerms.get(i);
+            if(curTerm.degree == 0){
+                break;
+            }
+            else if(i == myTerms.size() - 1){
+                myTerms.add(new Term(0,curTerm.degree - 1));
+            }
+            else{
+                Term nextTerm = myTerms.get(i+1);
+                if(curTerm.degree != nextTerm.degree + 1){
+                    myTerms.add(i+1, new Term(0,curTerm.degree-1));
+                }
+            }
+        }
+        return myTerms;
+    }
+    
+    public Polynomial getDerivative(){
+        List<Term> myTerms = new ArrayList();
+        for (int i = 0; i < this.terms.size(); i++) {
+            myTerms.add(this.terms.get(i).getDerivative());
+        }
+        return new Polynomial(myTerms);
+    }
+    
+    public Polynomial getIntegral(){
+        List<Term> myTerms = new ArrayList();
+        for (int i = 0; i < this.terms.size(); i++) {
+            myTerms.add(this.terms.get(i).getIntegral());
+        }
+        return new Polynomial(myTerms);
+    }
     
     public String toString(){
         String newString = "";
@@ -146,7 +213,10 @@ public class Polynomial {
         int indexOfPlus = newString.indexOf("+");
         int indexOfMinus = newString.indexOf("-");
         
-        if (indexOfPlus == 1 || indexOfMinus == 1){
+        if(newString.equals("")){
+            return "0";
+        }
+        else if (indexOfPlus == 1 || indexOfMinus == 1){
             String a = newString.substring(3);
            
             if (indexOfMinus == 1)
@@ -166,10 +236,15 @@ public class Polynomial {
     
     public double evaluateAt(double x) throws java.lang.ArithmeticException{
         double value = 0;
-        double next;
+        double next, exp;
         for (Term t: this.terms){
-            next = t.coeff*Math.pow(x, t.degree);
-            if (PolyGraphingCalculator.maxValue - Math.abs(next+3) < Math.abs(value)){
+            //Check whether an exponentiation causes overflow
+            if (t.degree*Math.log(Math.abs(x)) > PolyGraphingCalculator.lnMaxValue){
+                throw new java.lang.ArithmeticException();
+            }
+            next = t.coeff * Math.pow(x, t.degree);
+            //Check whether addition causes overflow
+            if (next > (PolyGraphingCalculator.maxValue - value) || next < -(PolyGraphingCalculator.maxValue + value)){
                 throw new java.lang.ArithmeticException();
             }
             value += next;
