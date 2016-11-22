@@ -319,8 +319,12 @@ public class GUI extends javax.swing.JFrame {
     }
         
     private void storeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storeButtonActionPerformed
+        try{
         String text = (String)inputBox.getSelectedItem();
         this.store(new Polynomial(text));
+        }catch(NumberFormatException e){
+            
+        }
     }//GEN-LAST:event_storeButtonActionPerformed
     public void store(Polynomial p){
         boolean duplicate = false;
