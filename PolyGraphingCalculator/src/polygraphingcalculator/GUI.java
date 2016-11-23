@@ -392,10 +392,12 @@ public class GUI extends javax.swing.JFrame {
         
     private void storeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storeButtonActionPerformed
         String text = (String)inputBox.getSelectedItem();
+
         try{
             this.store(new Polynomial(text));
             calculateButton.setEnabled(true);
-        }catch(NumberFormatException e){
+            clearAllButton.setEnabled(true);
+        }catch(Exception e){
             
         }
     }//GEN-LAST:event_storeButtonActionPerformed
@@ -448,6 +450,9 @@ public class GUI extends javax.swing.JFrame {
         clearImage(g);
         resultLabel.setText("");
         this.remodel();
+        clearAllButton.setEnabled(false);
+        graphButton.setEnabled(false);
+        graphAllButton.setEnabled(false);
     }//GEN-LAST:event_clearGraphs
 
     private void calculateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateButtonActionPerformed
@@ -600,7 +605,7 @@ public class GUI extends javax.swing.JFrame {
             xValue = Double.parseDouble(xValueField.getText());
             poly = new Polynomial((String)inputBox.getSelectedItem());
             yValueField.setText(Double.toString(poly.evaluateAt(xValue)));
-        }catch(NumberFormatException e){
+        }catch(Exception e){
             yValueField.setText("N/A");
         }
         
