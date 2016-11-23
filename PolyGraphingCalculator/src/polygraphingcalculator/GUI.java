@@ -13,11 +13,15 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 
 public class GUI extends javax.swing.JFrame {
+    //polynomials stored in the calculators memory
     List<Polynomial> storedPolynomials = new ArrayList();
+    //the choices in each dropdown box
     DefaultComboBoxModel inputBoxModel = new DefaultComboBoxModel();
     DefaultComboBoxModel polyBox1Model = new DefaultComboBoxModel();
-    DefaultComboBoxModel polyBox2Model = new DefaultComboBoxModel(); 
+    DefaultComboBoxModel polyBox2Model = new DefaultComboBoxModel();
+    //current calculator mode
     String mode = "Addition";
+    //current graphing mode
     String graphed = "";
     //Centre of the screen (x, y)
     double centreX = 0;
@@ -27,12 +31,14 @@ public class GUI extends javax.swing.JFrame {
     //Dragging variables
     int mouseX = 0;
     int mouseY = 0;
-    
+    //width and height of the jPanel
     int w, h;
     
     public GUI() {
         initComponents();
+        //the name of the arguably #1 graphing calculator in SJAM
         this.setTitle("Ye Olde Polynomial Graphing Calculator");
+        //sets width and height
         this.w = jPanel1.getWidth();
         this.h = jPanel1.getHeight();
     }
@@ -361,8 +367,9 @@ public class GUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     public void redraw(Graphics g){
+        //draws the graphs
         Image graph;
         if (graphed.equals("all")){
             graph = getAllGraphImage();
@@ -375,25 +382,30 @@ public class GUI extends javax.swing.JFrame {
     
     
     public void clearImage(Graphics g){
+        //find centre from
         double yMin = centreY - zoom;
         double yMax = centreY + zoom;
         double xMin = centreX - zoom;
         double xMax = centreX + zoom;
-        
+        //refreshes the jPanel
         g.setColor(Color.white);
         g.fillRect(0, 0, w, h);
         //Some axes here
         g.setColor(Color.red);
+        //find the centre
         int originX = (int) Math.round(-w*xMin/(xMax-xMin));
         int originY = (int) Math.round(h*yMax/(yMax - yMin));
+        //draws axis
         g.drawLine(0, originY, w, originY);
         g.drawLine(originX, 0, originX, h);        
     }
         
     private void storeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storeButtonActionPerformed
+        //gets the polynomial currently in the main combobox
         String text = (String)inputBox.getSelectedItem();
-
+        //if there's a problem with the text, don't do anything
         try{
+            //tries to store the polynomial in memory and if successful, enables calculations and clearing
             this.store(new Polynomial(text));
             calculateButton.setEnabled(true);
             clearAllButton.setEnabled(true);
@@ -403,12 +415,14 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_storeButtonActionPerformed
     public void store(Polynomial p){
         boolean duplicate = false;
+        //check if there is already a copy of the exact same polynomial in memory
         for(Polynomial poly: storedPolynomials){
             if(p.toString().equals(poly.toString())){
                 duplicate = true;
                 break;
             }
         }
+        //if the polynomial, is new, stores the polynomial in memory and enables removing and graphing
         if(!duplicate){
             storedPolynomials.add( p );
             this.remodel();
@@ -418,7 +432,9 @@ public class GUI extends javax.swing.JFrame {
         }
         inputBox.setSelectedIndex(storedPolynomials.size()-1);
     }
+    
     public void remodel(){
+        //updates the comboboxes with the new stored polynomials
         inputBoxModel.removeAllElements();
         polyBox1Model.removeAllElements();
         polyBox2Model.removeAllElements();
@@ -434,6 +450,7 @@ public class GUI extends javax.swing.JFrame {
     }
     
     private void graphButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_graphButtonActionPerformed
+        //resets zoom and only graphs the currently selected polynomial
         this.zoom = 10;
         Graphics g = jPanel1.getGraphics();
         graphed = "selected";
@@ -441,6 +458,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_graphButtonActionPerformed
 
     private void clearGraphs(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearGraphs
+        //removes everything and resets stored polynomials to nothing
         this.zoom = 10;
         this.centreX = 0;
         this.centreY = 0;
@@ -456,6 +474,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_clearGraphs
 
     private void calculateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateButtonActionPerformed
+        //does calculations based on what mode is currently selected
         Polynomial result = null;
         Polynomial p1 = new Polynomial((String)polyBox1.getSelectedItem());
         Polynomial p2 = new Polynomial((String)polyBox2.getSelectedItem());
@@ -476,6 +495,7 @@ public class GUI extends javax.swing.JFrame {
             Polynomial[] quotient = p1.polyDivide(p2);
             result = quotient[0];
             String remainder = quotient[1].toString();
+            //if there is a remainder, displays a * and lets user hover over the result to see the remainder
             if(!remainder.equals("0")){
                 secretPlusC.setText("*");
                 secretPlusC.setToolTipText("Remainder of " + remainder);
@@ -485,8 +505,9 @@ public class GUI extends javax.swing.JFrame {
         else if(mode.equals("Derivative")){
             result = p1.getDerivative();
         }
-        else{ //This is integral
+        else{ //This is indefinite integral
             result = p1.getIntegral();
+            //indefinite integrals have some constant added on
             secretPlusC.setText(" + C");
         }
         resultLabel.setText(result.toString());
@@ -494,15 +515,19 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_calculateButtonActionPerformed
 
     private void jPanel1MouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jPanel1MouseWheelMoved
+        //ZOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOM when you roll the mouse wheel
         if (evt.getWheelRotation() < 0)
+            //minimum zoom is a screen width of 0.02 units
             this.zoom = Math.max(this.zoom / 2, 0.01);
         else
+            //maximum zoom is calculated to prevent double overflow
             this.zoom = Math.min(this.zoom*2, PolyGraphingCalculator.maxValue);
         Graphics g = jPanel1.getGraphics();
         redraw(g);      
     }//GEN-LAST:event_jPanel1MouseWheelMoved
 
     private void rescaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rescaleButtonActionPerformed
+        //resets zoom to original and also recentres the view of the graph
         this.zoom = 10;
         this.centreX = 0;
         this.centreY = 0;
@@ -511,7 +536,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_rescaleButtonActionPerformed
 
     private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
-        
+        //lets the user move their view of the graph by dragging in any direction
         double interval = zoom*.015;
         if(evt.getX() > mouseX){
             centreX -= interval;
@@ -533,6 +558,8 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel1MouseDragged
 
     private void ModeBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ModeBoxItemStateChanged
+        //when the calculation mode is changed, update the corresponding objects on the screen
+        
         mode = (String)ModeBox.getSelectedItem();
         boolean visible = true;
         if(mode.equals("Addition")){
@@ -547,7 +574,7 @@ public class GUI extends javax.swing.JFrame {
         else if(mode.equals("Division")){
             operationLabel.setText("Divided By:");
         }
-        else{
+        else{//derivative and integral only require 1 polynomial and nothing else
             visible = false;
         }
         operationLabel.setVisible(visible);
@@ -557,12 +584,15 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_ModeBoxItemStateChanged
 
     private void storeResultButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storeResultButtonActionPerformed
+        //stores the result
         this.store(new Polynomial(resultLabel.getText()));
         storeResultButton.setEnabled(false);
     }//GEN-LAST:event_storeResultButtonActionPerformed
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
+        //removes the currently selected polynomial from memory
         int removeIndex = inputBox.getSelectedIndex();
+        //if the polynomial is not one of the ones in memory(it's a typed polynomial that has yet to be stored), then don't do any removal
         if(removeIndex != -1){
             storedPolynomials.remove(removeIndex);
             if(storedPolynomials.isEmpty()){
@@ -577,11 +607,13 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_removeButtonActionPerformed
 
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+        //event used for dragging around
         mouseX = evt.getX();
         mouseY = evt.getY();
     }//GEN-LAST:event_jPanel1MouseClicked
 
     private void jPanel1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseMoved
+        //used to get the x and y value of the location of the math based on the graph
         double xLoc = 2*zoom*(evt.getX() - w/2)/w + centreX;
         double yLoc = 2*zoom*(h/2 - evt.getY())/h + centreY;
         xLabel.setText("X: "+ format(xLoc));
@@ -589,6 +621,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel1MouseMoved
 
     private void graphAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_graphAllButtonActionPerformed
+        //graphs all polynomials stored in memory
         this.zoom = 10;
         Graphics g = jPanel1.getGraphics();
         graphed = "all";
@@ -596,9 +629,11 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_graphAllButtonActionPerformed
 
     private void xValueFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_xValueFieldKeyTyped
+        //dynamically updates the y value when you type in a different x-value
         this.yValueFieldUpdate();
     }//GEN-LAST:event_xValueFieldKeyTyped
     public void yValueFieldUpdate(){
+        //find the y-value of the currently selected polynomial given the x-value
         double xValue;
         Polynomial poly;
         try{
@@ -606,12 +641,12 @@ public class GUI extends javax.swing.JFrame {
             poly = new Polynomial((String)inputBox.getSelectedItem());
             yValueField.setText(Double.toString(poly.evaluateAt(xValue)));
         }catch(Exception e){
+            //if something doesn't work, set the y value to N/A
             yValueField.setText("N/A");
         }
-        
-        
     }
     public static String format(Number n) {
+        //rounds a double to 3 decimal places, and makes it look pretty
         NumberFormat format = DecimalFormat.getInstance();
         format.setRoundingMode(RoundingMode.FLOOR);
         format.setMinimumFractionDigits(0);
