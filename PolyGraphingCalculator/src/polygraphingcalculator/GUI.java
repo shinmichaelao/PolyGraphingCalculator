@@ -705,12 +705,10 @@ public class GUI extends javax.swing.JFrame {
         Graphics2D g = (Graphics2D) bi.getGraphics();
         
         clearImage(g);
-        
-        g.setColor(Color.black);
-        
-        int index = inputBox.getSelectedIndex();
-        
+        g.setColor(Color.black);        
+        int index = inputBox.getSelectedIndex();        
         if (index == -1){
+            //No polynomial returns the empty image
             return bi;
         }
         
@@ -719,6 +717,7 @@ public class GUI extends javax.swing.JFrame {
             try{
                 f = new Polynomial((String)inputBox.getSelectedItem());
             }catch(NumberFormatException e){
+                //Empty polynomial list returns the empty image
                 return bi;
             }
         }
