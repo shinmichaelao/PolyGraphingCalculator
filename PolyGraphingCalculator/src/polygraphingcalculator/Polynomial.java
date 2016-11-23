@@ -5,15 +5,18 @@ import java.util.List;
 
 
 public class Polynomial {
+    //polynomials are a list of terms
     List<Term> terms = new ArrayList();    
     
+    //create polynomial from a list of terms
     public Polynomial(List<Term> t){
         this.terms = t;
         this.sortByDegree();
     }
     
+    //create polynomial from a string
     public Polynomial(String s){
-        if(s.equals("0")){
+        if(s.equals("0")){ //special case for 0
             this.terms.add(new Term(0,0));
         }
         else{
@@ -113,13 +116,16 @@ public class Polynomial {
         }
     }
     
+   
     public Polynomial polyAdd(Polynomial poly){
+        //creates a new list of terms that combines both polynomials' terms
         List<Term> myTerms = new ArrayList();
         myTerms.addAll(this.terms);
         myTerms.addAll(poly.terms);
         return new Polynomial(myTerms);
     }
     public Polynomial polySubtract(Polynomial poly){
+        //same as polyAdd, but the polynomial being subtracted has its sign's changed
         List<Term> myTerms = new ArrayList();
         myTerms.addAll(this.terms);
         for(Term t: poly.terms){
@@ -129,6 +135,7 @@ public class Polynomial {
     }
     
     public Polynomial polyMultiply(Polynomial poly){
+        //goes through each term of one polynomial and multiplies it by the term in the other polynomial
         Term termA = null;
         Term termB = null;
         List<Term> myTerms = new ArrayList();
@@ -143,6 +150,7 @@ public class Polynomial {
     }
     
     public Polynomial[] polyDivide(Polynomial poly){
+        //utilizes extended synthetic division to divide a polynomial by another polynomial, returning the quotient and the remainder
         List<Term> quotient = addZeroes(this.terms);
         List<Term> divisor = addZeroes(poly.terms);
         double botCoeff = divisor.get(0).coeff;
@@ -170,6 +178,7 @@ public class Polynomial {
     }
     
     public static List<Term> addZeroes(List<Term> myTerms){
+        //division requires the terms that have coefficient of zero to be present, so this method just adds them in
         for(int i = 0; i<myTerms.size();i++){
             Term curTerm = myTerms.get(i);
             if(curTerm.degree == 0){
@@ -189,6 +198,7 @@ public class Polynomial {
     }
     
     public Polynomial getDerivative(){
+        //gets the derivative of each term to make the derivative of a polynomial using basic derivative rules
         List<Term> myTerms = new ArrayList();
         for (int i = 0; i < this.terms.size(); i++) {
             myTerms.add(this.terms.get(i).getDerivative());
@@ -197,6 +207,7 @@ public class Polynomial {
     }
     
     public Polynomial getIntegral(){
+         //gets the integral of each term to make the integral of a polynomial using basic integral rules
         List<Term> myTerms = new ArrayList();
         for (int i = 0; i < this.terms.size(); i++) {
             myTerms.add(this.terms.get(i).getIntegral());
@@ -205,11 +216,14 @@ public class Polynomial {
     }
     
     public String toString(){
+        //replaces java's toString that returns the place in memory of the object in favour of an actual toString() function
         String newString = "";
         for (Term t: this.terms) {
            String term = t.toString();
            newString += term;
         }
+        
+        //fixes the front of the string polynomial so it looks nice
         int indexOfPlus = newString.indexOf("+");
         int indexOfMinus = newString.indexOf("-");
         
@@ -231,10 +245,12 @@ public class Polynomial {
     }
     
     public void sortByDegree(){
+        //utilizes a modified mergesort algorithm that also adds terms of the same degree together
         this.terms = MergeSort.mergeSort(terms);
     }
     
     public double evaluateAt(double x) throws java.lang.ArithmeticException{
+        //gets the y value of a polynomial when given an x value
         double value = 0;
         double next, exp;
         for (Term t: this.terms){
